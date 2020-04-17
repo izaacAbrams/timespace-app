@@ -1,7 +1,11 @@
 import React from "react";
 
 function App() {
-  return <main className="App">{/* content goes here */}</main>;
+  return (
+    <main className="App">
+      <h1>Timespace</h1>
+    </main>
+  );
 }
 
 export default App;
