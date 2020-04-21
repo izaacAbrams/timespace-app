@@ -1,0 +1,8 @@
+.Appointments__nav {
+  text-align: center;
+}
+
+.Nav {
+  display: flex;
+  justify-content: space-evenly;
+}

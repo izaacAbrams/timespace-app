@@ -1,0 +1,22 @@
+.NewSchedule {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  color: #444;
+  text-align: center;
+  line-height: 1.5;
+  min-width: 320px;
+}
+
+.NewSchedule__main_section {
+  min-height: 200px;
+  padding: 30px 15px;
+  background-color: #bbb;
+}
+
+.NewSchedule__section {
+  padding: 5px;
+}
+
+.NewSchedule__hours {
+  width: 50px;
+}

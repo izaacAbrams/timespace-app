@@ -1,0 +1,29 @@
+.NewApptForm__section {
+  padding: 5px;
+}
+
+.NewApptForm__section > label {
+  margin: 0 10px;
+}
+
+.NewApptForm__form {
+  display: inline-block;
+  background-color: lightgrey;
+  padding: 20px;
+  margin: auto;
+  font-size: 18px;
+}
+
+.NewApptForm__main {
+  display: flex;
+}
+
+.NewApptForm__title {
+  text-align: center;
+  padding: 15px;
+}
+
+.NewApptForm__form > button {
+  display: block;
+  margin: auto;
+}

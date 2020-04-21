@@ -1,0 +1,10 @@
+.LandingPage {
+  background: black;
+  color: white;
+  text-align: center;
+  height: calc(100vh - 60px);
+}
+
+.LandingPage__title {
+  padding: 15px;
+}

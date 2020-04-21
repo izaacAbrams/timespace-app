@@ -1,0 +1,29 @@
+.SignUpForm__section {
+  padding: 5px;
+  font-size: 18px;
+}
+
+.SignUpForm__section > label {
+  margin: 0 10px;
+}
+
+.SignUpForm__form {
+  background-color: lightgrey;
+  flex-direction: column;
+
+  padding: 20px;
+}
+
+.SignUpForm__main {
+  display: flex;
+  justify-content: center;
+}
+
+.SignUpForm__title {
+  text-align: center;
+}
+
+.SignUpForm__form > button {
+  display: block;
+  margin: auto;
+}

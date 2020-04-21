@@ -1,0 +1,30 @@
+* {
+  box-sizing: border-box;
+}
+
+.Appointments {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  color: #444;
+  text-align: center;
+  min-width: 320px;
+}
+
+.Appointments__date {
+  min-height: 200px;
+  padding: 30px 15px;
+  background-color: #bbb;
+}
+.form-section {
+  padding: 5px;
+}
+
+.Appointments__main {
+  display: flex;
+  justify-content: center;
+}
+.Appointments__main_appt {
+  border: 2px solid black;
+  padding: 10px;
+  margin: 5px;
+}
