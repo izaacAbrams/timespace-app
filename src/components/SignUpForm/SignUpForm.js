@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import "./SignUpForm.css";
 class SignUpForm extends Component {
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.history.push("/");
+  }
   render() {
     return (
       <div className="SignUpForm">
         <h2 className="SignUpForm__title">Sign Up Form</h2>
         <main className="SignUpForm__main">
-          <form className="SignUpForm__form">
+          <form
+            className="SignUpForm__form"
+            onSubmit={(e) => this.handleSubmit(e)}
+          >
             <div className="SignUpForm__section">
               <label htmlFor="full-name">Full Name:</label>
               <input

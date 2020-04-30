@@ -27,40 +27,52 @@ class NewApptForm extends Component {
     return questionsArray;
   }
 
+  handleName(e) {
+    this.setState({
+      answers: {
+        name: e.target.value,
+      },
+    });
+  }
+
   handleNext(e) {
-    e.preventDefault();
-    const questionTitle = Object.keys(this.state.questions)[
-      this.state.currentQuestion
-    ];
-    if (questionTitle === "name") {
-      this.setState({
-        answers: {
-          name: document.querySelector("input").value,
-        },
-      });
-    }
+    // const questionTitle = Object.keys(this.state.questions)[
+    //   this.state.currentQuestion
+    // ];
+    // if (questionTitle === "name" || questionTitle === "email") {
+    //   this.setState({
+    //     answers: {
+    //       [questionTitle]: document.querySelector("input").value,
+    //     },
+    //   });
+    // } else if (questionTitle === "time") {
+    //   this.setState({
+    //     [questionTitle]: document.querySelector("option").value,
+    //   });
+    // }
     Object.keys(this.state.questions).forEach((question) => {
-      console.log(question);
       if (
         question !==
         Object.keys(this.state.questions)[this.state.currentQuestion]
       ) {
         return question;
       }
-      let newState = {
-        answers: {
-          ...this.state.answers,
-          [question]: document.querySelector("input").value,
-        },
-      };
-      console.log(newState);
+      // const questionAnswers =
+      //   if()
+
+      // let newState = {
+      //   answers: {
+      //     ...this.state.answers,
+      //     [question]: document.querySelector("input").value,
+      //   },
+      // };
+      console.log(this.state.answers);
     });
-    console.log(document.querySelector("input").value);
-    console.log(Object.keys(this.state.questions)[this.state.currentQuestion]);
+
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
     });
-    document.querySelector("input").value = "";
+    // document.querySelector("input").value === "";
   }
 
   handleSubmit(e) {
@@ -76,10 +88,11 @@ class NewApptForm extends Component {
     if (questionTitle === "name") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule-name">Name:</label>
+          <label htmlFor="schedule_name">Name:</label>
           <input
             type="text"
-            name="schedule-name"
+            onChange={(e) => this.handleName(e)}
+            name="schedule_name"
             placeholder="Joe Smith"
             required
           />
@@ -101,7 +114,7 @@ class NewApptForm extends Component {
       return (
         <div className="NewApptForm__section">
           <label htmlFor="appt-time">Appointment time:</label>
-          <select className="form-time" required>
+          <select className="form-time input" required>
             <option>1:00</option>
             <option>2:00</option>
             <option>3:00</option>
@@ -125,7 +138,7 @@ class NewApptForm extends Component {
       return (
         <div className="NewApptForm__section">
           <label htmlFor="appt-type">Service:</label>
-          <select className="form-appt-type" required>
+          <select className="form-appt-type input " required>
             <option>Message</option>
             <option>Spa stuff</option>
             <option>Cucumber eyes</option>
@@ -139,6 +152,7 @@ class NewApptForm extends Component {
         <div className="NewApptForm__section">
           <label htmlFor="notes">Comments:</label>
           <textarea
+            className="input"
             name="notes"
             placeholder="Any extra notes for the staff?"
           ></textarea>

@@ -1,12 +1,13 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Nav from "../Nav/Nav";
-import LandingPage from "../LandingPage/LandingPage";
+import LandingPage from "../../routes/LandingPage/LandingPage";
 import SignUpForm from "../SignUpForm/SignUpForm";
 import NewApptForm from "../NewApptForm/NewApptForm";
-import Appointments from "../Appointments/Appointments";
+import Appointments from "../../routes/Appointments/Appointments";
 import LoginForm from "../LoginForm/LoginForm";
 import NewScheduleForm from "../NewScheduleForm/NewScheduleForm";
+import PrivateRoute from "../Utils/PrivateRoute";
 import NotFound from "../NotFound/NotFound";
 import "./App.css";
 
@@ -23,8 +24,8 @@ function App() {
           <Route path={"/signup"} component={SignUpForm} />
           <Route path={"/login"} component={LoginForm} />
           <Route path={"/new-appt"} component={NewApptForm} />
-          <Route path={"/appointments"} component={Appointments} />
-          <Route path={"/new-schedule"} component={NewScheduleForm} />
+          <PrivateRoute path={"/appointments"} component={Appointments} />
+          <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
           <Route component={NotFound} />
         </Switch>
       </main>

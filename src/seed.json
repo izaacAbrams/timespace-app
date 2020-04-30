@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "name": "Joe Smith",
+    "service": "nails",
+    "date": ""
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "service": "salon",
+    "appt_year": "2020",
+    "appt_month": "3",
+    "appt_date": "10",
+    "appt_time": "8"
+  }
+]
