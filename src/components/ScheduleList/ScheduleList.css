@@ -1,0 +1,11 @@
+.Schedules__section {
+  border: 2px solid black;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Schedules__buttons {
+  align-self: center;
+}

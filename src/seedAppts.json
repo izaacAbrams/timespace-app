@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Joe Smith",
+    "service": "Nails",
+    "schedule": "1",
+    "appt_date_time": "2020-04-10T16:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Jane Smith",
+    "schedule": "1",
+    "service": "Salon",
+    "appt_date_time": "2020-04-10T14:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": "Izaac A",
+    "schedule": "2",
+    "service": "training",
+    "appt_date_time": "2020-04-10T18:00:00.000Z"
+  }
+]

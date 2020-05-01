@@ -60,6 +60,10 @@ class NewScheduleForm extends Component {
               </select>
             </div>
             <div className="NewSchedule__section">
+              <label htmlFor="services">Services:</label>
+              <input type="text" name="services" />
+            </div>
+            <div className="NewSchedule__section">
               <label htmlFor="description">Description:</label>
               <textarea
                 name="description"

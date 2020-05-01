@@ -12,6 +12,9 @@ export default function Nav() {
       <a href="/login" className="Appointments__nav">
         <p>Login</p>
       </a>
+      <a href="/schedules" className="Appointments__nav">
+        <p>Schedules</p>
+      </a>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import NewApptForm from "../NewApptForm/NewApptForm";
 import Appointments from "../../routes/Appointments/Appointments";
 import LoginForm from "../LoginForm/LoginForm";
 import NewScheduleForm from "../NewScheduleForm/NewScheduleForm";
+import Schedules from "../../routes/Schedules/Schedules";
 import PrivateRoute from "../Utils/PrivateRoute";
 import NotFound from "../NotFound/NotFound";
 import "./App.css";
@@ -23,9 +24,10 @@ function App() {
           <Route exact path={"/"} component={LandingPage} />
           <Route path={"/signup"} component={SignUpForm} />
           <Route path={"/login"} component={LoginForm} />
-          <Route path={"/new-appt"} component={NewApptForm} />
-          <PrivateRoute path={"/appointments"} component={Appointments} />
+          <Route path={"/new-appt/:id"} component={NewApptForm} />
+          <PrivateRoute path={"/schedules/:id"} component={Appointments} />
           <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
+          <PrivateRoute path={"/schedules"} component={Schedules} />
           <Route component={NotFound} />
         </Switch>
       </main>

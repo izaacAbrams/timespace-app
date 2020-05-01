@@ -11,7 +11,7 @@ export default function LandingPage() {
       </p>
       <button>Learn more</button>
       <button>
-        <a href="/appointments">View Schedule</a>
+        <a href="/signup">Get Started</a>
       </button>
     </div>
   );
