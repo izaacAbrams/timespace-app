@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Appointments.css";
-import seedAppts from "../../seedAppts.json";
 import seedSchedules from "../../seedSchedules.json";
 import ApptCard from "../../components/ApptCard/ApptCard";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -28,10 +27,7 @@ class Appointments extends Component {
 
   renderAppts() {
     const { apptList = [] } = this.context;
-
-    seedAppts.forEach((appts) => this.context.apptList.push(appts));
     const filteredAppts = this.filterAppts(apptList);
-    console.log(filteredAppts);
     return filteredAppts.map((appt) => (
       <ApptCard
         name={appt.name}

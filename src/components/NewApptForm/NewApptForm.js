@@ -1,32 +1,31 @@
 import React, { Component } from "react";
 import "./NewApptForm.css";
 import seedSchedules from "../../seedSchedules.json";
-import seedAppts from "../../seedAppts.json";
 import ApptContext from "../../contexts/ApptContext";
-// import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
 class NewApptForm extends Component {
   static contextType = ApptContext;
 
   state = {
-    date_time: "",
+    id: uuidv4(),
+    appt_date_time: "",
     name: "",
     email: "",
     service: "",
-    comments: "",
+    notes: "",
+    schedule: this.props.match.params.name,
   };
 
   handleSubmit(e) {
     e.preventDefault();
     const newAppt = {
-      name: e.target.schedule_name.value,
-      email: e.target.schedule_email.value,
-      appt_date_time: e.target.schedule_time.value,
-      service: e.target.schedule_services.value,
-      notes: e.target.notes.value,
+      ...this.state,
     };
+
     this.context.apptList.push(newAppt);
+    console.log(this.context.apptList);
   }
 
   handleSchedule() {
@@ -36,13 +35,19 @@ class NewApptForm extends Component {
   }
 
   handleApptTimes() {
-    seedAppts.forEach((appts) => this.context.apptList.push(appts));
+    // seedAppts.forEach((appts) => this.context.apptList.push(appts));
     // const timeOpen = new Date(
     //   moment(this.handleSchedule().time_open, "hhmm").format()
     // );
     // const timeClosed = new Date(
     //   moment(this.handleSchedule().time_closed, "hhmm").format()
     // );
+
+    console.log(
+      moment(this.handleSchedule().time_open, "HHmm")
+        .set("minute", "30")
+        .format("HHmm")
+    );
     const takenTimes = this.context.apptList.map((appt) => appt.appt_date_time);
     let timeList = [];
     for (
@@ -56,7 +61,7 @@ class NewApptForm extends Component {
     takenTimes.map(
       (time) =>
         (timeList = timeList.filter(
-          (takenTime) => takenTime !== moment(time).format("hhmm")
+          (takenTime) => takenTime !== moment(time).format("HHmm")
         ))
     );
     return timeList;
@@ -65,7 +70,7 @@ class NewApptForm extends Component {
   handleDate(e) {
     const apptDate = e.target.value;
     this.setState({
-      date_time: apptDate,
+      appt_date_time: apptDate,
     });
   }
 
@@ -75,14 +80,29 @@ class NewApptForm extends Component {
     });
   }
 
+  handleEmail(e) {
+    this.setState({
+      email: e.target.value,
+    });
+  }
+  handleService(e) {
+    this.setState({
+      service: e.target.value,
+    });
+  }
+  handleNotes(e) {
+    this.setState({
+      notes: e.target.value,
+    });
+  }
   handleTime(e) {
     const apptTime = moment(
-      `${this.state.date_time} ${e.target.value}`,
+      `${this.state.appt_date_time} ${e.target.value}`,
       "YYYY-MM-DD HH:mm a"
     ).format();
 
     this.setState({
-      date_time: apptTime,
+      appt_date_time: apptTime,
     });
   }
 
@@ -91,7 +111,7 @@ class NewApptForm extends Component {
     //   .set("hour", "3")
     //   .set("minutes", "30")
     //   .format();
-    this.handleApptTimes();
+    // this.handleApptTimes();
 
     return (
       <div className="NewApptForm">
@@ -120,6 +140,7 @@ class NewApptForm extends Component {
               <label htmlFor="schedule_email">Email:</label>
               <input
                 type="text"
+                onChange={(e) => this.handleEmail(e)}
                 name="schedule_email"
                 placeholder="joe.smith@example.com"
                 required
@@ -135,7 +156,7 @@ class NewApptForm extends Component {
               />
             </div>
             <div className="NewApptForm__section">
-              <label htmlFor="appt-time">Appointment time:</label>
+              <label htmlFor="schedule_time">Appointment time:</label>
               <select
                 className="form-time"
                 name="schedule_time"
@@ -156,6 +177,7 @@ class NewApptForm extends Component {
               <select
                 className="form-appt-type"
                 name="schedule_services"
+                onChange={(e) => this.handleService(e)}
                 required
               >
                 <option>Message</option>
@@ -169,6 +191,7 @@ class NewApptForm extends Component {
               <label htmlFor="notes">Comments:</label>
               <textarea
                 name="notes"
+                onChange={(e) => this.handleNotes(e)}
                 placeholder="Any extra notes for the staff?"
               ></textarea>
             </div>

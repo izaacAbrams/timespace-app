@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import Nav from "../Nav/Nav";
 import LandingPage from "../../routes/LandingPage/LandingPage";
@@ -10,29 +10,36 @@ import NewScheduleForm from "../NewScheduleForm/NewScheduleForm";
 import Schedules from "../../routes/Schedules/Schedules";
 import PrivateRoute from "../Utils/PrivateRoute";
 import NotFound from "../NotFound/NotFound";
+import seedAppts from "../../seedAppts.json";
+import ApptContext from "../../contexts/ApptContext";
 import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App__header">
-        <Nav />
-      </header>
+class App extends Component {
+  static contextType = ApptContext;
 
-      <main className="App__main">
-        <Switch>
-          <Route exact path={"/"} component={LandingPage} />
-          <Route path={"/signup"} component={SignUpForm} />
-          <Route path={"/login"} component={LoginForm} />
-          <Route path={"/:name/new-appt"} component={NewApptForm} />
-          <PrivateRoute path={"/schedules/:id"} component={Appointments} />
-          <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
-          <PrivateRoute path={"/schedules"} component={Schedules} />
-          <Route component={NotFound} />
-        </Switch>
-      </main>
-    </div>
-  );
+  render() {
+    seedAppts.forEach((appts) => this.context.apptList.push(appts));
+    return (
+      <div className="App">
+        <header className="App__header">
+          <Nav />
+        </header>
+
+        <main className="App__main">
+          <Switch>
+            <Route exact path={"/"} component={LandingPage} />
+            <Route path={"/signup"} component={SignUpForm} />
+            <Route path={"/login"} component={LoginForm} />
+            <Route path={"/:name/new-appt"} component={NewApptForm} />
+            <PrivateRoute path={"/schedules/:id"} component={Appointments} />
+            <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
+            <PrivateRoute path={"/schedules"} component={Schedules} />
+            <Route component={NotFound} />
+          </Switch>
+        </main>
+      </div>
+    );
+  }
 }
 
 export default App;

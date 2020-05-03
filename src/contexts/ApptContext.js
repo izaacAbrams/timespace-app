@@ -35,7 +35,6 @@ export class ApptProvider extends Component {
   };
 
   setAppt = (apptList) => {
-    console.log(apptList);
     this.setState({ apptList });
   };
 
