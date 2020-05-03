@@ -1,181 +1,97 @@
 import React, { Component } from "react";
 import "./NewApptForm.css";
 import seedSchedules from "../../seedSchedules.json";
+import seedAppts from "../../seedAppts.json";
+import ApptContext from "../../contexts/ApptContext";
+// import uuid from "uuid";
+import moment from "moment";
 
 class NewApptForm extends Component {
+  static contextType = ApptContext;
+
   state = {
-    currentQuestion: 0,
-    questions: {
-      name: "What is your name?",
-      email: "What is your email address?",
-      time: "What time would you like to make the appointment for?",
-      services: "What is the appointment for?",
-      comments:
-        "Would you like to add any special instructions or notes with the appointment?",
-    },
-    answers: {
-      name: "",
-      email: "",
-      time: "",
-      services: "",
-      comments: "",
-    },
-    button: "Next",
+    date_time: "",
+    name: "",
+    email: "",
+    service: "",
+    comments: "",
   };
 
-  handleQuestions() {
-    let questionsArray = Object.values(this.state.questions);
-    return questionsArray;
+  handleSubmit(e) {
+    e.preventDefault();
+    const newAppt = {
+      name: e.target.schedule_name.value,
+      email: e.target.schedule_email.value,
+      appt_date_time: e.target.schedule_time.value,
+      service: e.target.schedule_services.value,
+      notes: e.target.notes.value,
+    };
+    this.context.apptList.push(newAppt);
+  }
+
+  handleSchedule() {
+    return seedSchedules.find(
+      (schedule) => schedule.id === this.props.match.params.name
+    );
+  }
+
+  handleApptTimes() {
+    seedAppts.forEach((appts) => this.context.apptList.push(appts));
+    // const timeOpen = new Date(
+    //   moment(this.handleSchedule().time_open, "hhmm").format()
+    // );
+    // const timeClosed = new Date(
+    //   moment(this.handleSchedule().time_closed, "hhmm").format()
+    // );
+    const takenTimes = this.context.apptList.map((appt) => appt.appt_date_time);
+    let timeList = [];
+    for (
+      let i = parseInt(this.handleSchedule().time_open);
+      i <= parseInt(this.handleSchedule().time_closed);
+      i += parseInt(this.handleSchedule().services[0].duration)
+    ) {
+      timeList.push(moment(i, "hmm").format("HHmm"));
+    }
+
+    takenTimes.map(
+      (time) =>
+        (timeList = timeList.filter(
+          (takenTime) => takenTime !== moment(time).format("hhmm")
+        ))
+    );
+    return timeList;
+  }
+
+  handleDate(e) {
+    const apptDate = e.target.value;
+    this.setState({
+      date_time: apptDate,
+    });
   }
 
   handleName(e) {
     this.setState({
-      answers: {
-        name: e.target.value,
-      },
+      name: e.target.value,
     });
   }
 
-  handleNext(e) {
-    // const questionTitle = Object.keys(this.state.questions)[
-    //   this.state.currentQuestion
-    // ];
-    // if (questionTitle === "name" || questionTitle === "email") {
-    //   this.setState({
-    //     answers: {
-    //       [questionTitle]: document.querySelector("input").value,
-    //     },
-    //   });
-    // } else if (questionTitle === "time") {
-    //   this.setState({
-    //     [questionTitle]: document.querySelector("option").value,
-    //   });
-    // }
-    Object.keys(this.state.questions).forEach((question) => {
-      if (
-        question !==
-        Object.keys(this.state.questions)[this.state.currentQuestion]
-      ) {
-        return question;
-      }
-      // const questionAnswers =
-      //   if()
-
-      // let newState = {
-      //   answers: {
-      //     ...this.state.answers,
-      //     [question]: document.querySelector("input").value,
-      //   },
-      // };
-      console.log(this.state.answers);
-    });
+  handleTime(e) {
+    const apptTime = moment(
+      `${this.state.date_time} ${e.target.value}`,
+      "YYYY-MM-DD HH:mm a"
+    ).format();
 
     this.setState({
-      currentQuestion: this.state.currentQuestion + 1,
+      date_time: apptTime,
     });
-    // document.querySelector("input").value === "";
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log("submit");
-  }
-
-  // handleInputs() {
-  //   const questionTitle = Object.keys(this.state.questions)[
-  //     this.state.currentQuestion
-  //   ];
-
-  //   if (questionTitle === "name") {
-  //     return (
-  //       <div className="NewApptForm__section">
-  //         <label htmlFor="schedule_name">Name:</label>
-  //         <input
-  //           type="text"
-  //           onChange={(e) => this.handleName(e)}
-  //           name="schedule_name"
-  //           placeholder="Joe Smith"
-  //           required
-  //         />
-  //       </div>
-  //     );
-  //   } else if (questionTitle === "email") {
-  //     return (
-  //       <div className="NewApptForm__section">
-  //         <label htmlFor="schedule-email">Email:</label>
-  //         <input
-  //           type="text"
-  //           name="schedule-email"
-  //           placeholder="joe.smith@example.com"
-  //           required
-  //         />
-  //       </div>
-  //     );
-  //   } else if (questionTitle === "time") {
-  //     return (
-  //       <div className="NewApptForm__section">
-  //         <label htmlFor="appt-time">Appointment time:</label>
-  //         <select className="form-time input" required>
-  //           <option>1:00</option>
-  //           <option>2:00</option>
-  //           <option>3:00</option>
-  //           <option>4:00</option>
-  //           <option>5:00</option>
-  //           <option>6:00</option>
-  //           <option>7:00</option>
-  //           <option>8:00</option>
-  //           <option>9:00</option>
-  //           <option>10:00</option>
-  //           <option>11:00</option>
-  //           <option>12:00</option>
-  //         </select>
-  //         <select>
-  //           <option>AM</option>
-  //           <option>PM</option>
-  //         </select>
-  //       </div>
-  //     );
-  //   } else if (questionTitle === "services") {
-  //     return (
-  //       <div className="NewApptForm__section">
-  //         <label htmlFor="appt-type">Service:</label>
-  //         <select className="form-appt-type input " required>
-  //           <option>Message</option>
-  //           <option>Spa stuff</option>
-  //           <option>Cucumber eyes</option>
-  //           <option>Hot towel</option>
-  //           <option>Nails</option>
-  //         </select>
-  //       </div>
-  //     );
-  //   } else if (questionTitle === "comments") {
-  //     return (
-  //       <div className="NewApptForm__section">
-  //         <label htmlFor="notes">Comments:</label>
-  //         <textarea
-  //           className="input"
-  //           name="notes"
-  //           placeholder="Any extra notes for the staff?"
-  //         ></textarea>
-  //       </div>
-  //     );
-  //   }
-  // }
-
-  handleSchedule() {
-    return seedSchedules.find(
-      (schedule) => schedule.id === this.props.match.params.id
-    );
-  }
   render() {
-    // const configButtons =
-    //   this.handleQuestions()[this.state.currentQuestion + 1] !== undefined ? (
-    //     <button onClick={(e) => this.handleNext(e)}>Next</button>
-    //   ) : (
-    //     <button type="submit" onClick={(e) => this.handleSubmit(e)}>
-    //       Submit
-    //     </button>
-    //   );
+    // const newDate = moment(`2020-05-01`)
+    //   .set("hour", "3")
+    //   .set("minutes", "30")
+    //   .format();
+    this.handleApptTimes();
 
     return (
       <div className="NewApptForm">
@@ -194,45 +110,54 @@ class NewApptForm extends Component {
               <label htmlFor="schedule_name">Name:</label>
               <input
                 type="text"
-                onChange={(e) => this.handleName(e)}
                 name="schedule_name"
+                onChange={(e) => this.handleName(e)}
                 placeholder="Joe Smith"
                 required
               />
             </div>
             <div className="NewApptForm__section">
-              <label htmlFor="schedule-email">Email:</label>
+              <label htmlFor="schedule_email">Email:</label>
               <input
                 type="text"
-                name="schedule-email"
+                name="schedule_email"
                 placeholder="joe.smith@example.com"
                 required
               />
             </div>
             <div className="NewApptForm__section">
+              <label htmlFor="schedule_date">Date:</label>
+              <input
+                type="date"
+                onChange={(e) => this.handleDate(e)}
+                name="schedule_date"
+                required
+              />
+            </div>
+            <div className="NewApptForm__section">
               <label htmlFor="appt-time">Appointment time:</label>
-              <select className="form-time input" required>
-                <option>1:00</option>
-                <option>2:00</option>
-                <option>3:00</option>
-                <option>4:00</option>
-                <option>5:00</option>
-                <option>6:00</option>
-                <option>7:00</option>
-                <option>8:00</option>
-                <option>9:00</option>
-                <option>10:00</option>
-                <option>11:00</option>
-                <option>12:00</option>
-              </select>
-              <select>
-                <option>AM</option>
-                <option>PM</option>
+              <select
+                className="form-time"
+                name="schedule_time"
+                onChange={(e) => this.handleTime(e)}
+                required
+              >
+                {this.handleApptTimes().map((time) => {
+                  return (
+                    <option key={time}>
+                      {moment(time, "hhmm").format("LT")}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="NewApptForm__section">
-              <label htmlFor="appt-type">Service:</label>
-              <select className="form-appt-type input " required>
+              <label htmlFor="schedule_services">Service:</label>
+              <select
+                className="form-appt-type"
+                name="schedule_services"
+                required
+              >
                 <option>Message</option>
                 <option>Spa stuff</option>
                 <option>Cucumber eyes</option>
@@ -243,14 +168,11 @@ class NewApptForm extends Component {
             <div className="NewApptForm__section">
               <label htmlFor="notes">Comments:</label>
               <textarea
-                className="input"
                 name="notes"
                 placeholder="Any extra notes for the staff?"
               ></textarea>
             </div>
-            <button type="submit" onClick={(e) => this.handleSubmit(e)}>
-              Submit
-            </button>
+            <button type="submit">Submit</button>
           </form>
         </main>
       </div>

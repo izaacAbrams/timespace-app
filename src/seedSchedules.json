@@ -1,14 +1,30 @@
 [
   {
     "id": "1",
-    "schedule": "Sally's Salon & Spa"
+    "schedule": "Sally's Salon & Spa",
+    "time_open": "0800",
+    "time_closed": "1700",
+    "services": [
+      {
+        "name": "Nails",
+        "duration": "100"
+      },
+      {
+        "name": "Spa",
+        "duration": "30"
+      }
+    ]
   },
   {
     "id": "2",
-    "schedule": "Mike's Pokemon Training"
+    "schedule": "Mike's Pokemon Training",
+    "time_open": "0600",
+    "time_closed": "2200"
   },
   {
     "id": "3",
-    "schedule": "Music to study to"
+    "schedule": "Music to study to",
+    "time_open": "0700",
+    "time_closed": "2000"
   }
 ]

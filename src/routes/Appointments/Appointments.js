@@ -63,7 +63,7 @@ class Appointments extends Component {
             <h2>{this.findSchedule().schedule}</h2>
             <DatePicker />
 
-            <Link to={"/new-appt/" + this.props.match.params.id}>
+            <Link to={`/${this.findSchedule().id}/new-appt`}>
               New Appointment
             </Link>
           </form>

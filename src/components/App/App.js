@@ -24,7 +24,7 @@ function App() {
           <Route exact path={"/"} component={LandingPage} />
           <Route path={"/signup"} component={SignUpForm} />
           <Route path={"/login"} component={LoginForm} />
-          <Route path={"/new-appt/:id"} component={NewApptForm} />
+          <Route path={"/:name/new-appt"} component={NewApptForm} />
           <PrivateRoute path={"/schedules/:id"} component={Appointments} />
           <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
           <PrivateRoute path={"/schedules"} component={Schedules} />
