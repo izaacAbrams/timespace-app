@@ -20,3 +20,7 @@
 .NewSchedule__hours {
   width: 50px;
 }
+
+.NewSchedule__services_p {
+  font-size: 12px;
+}

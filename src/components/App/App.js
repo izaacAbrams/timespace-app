@@ -6,19 +6,14 @@ import SignUpForm from "../SignUpForm/SignUpForm";
 import NewApptForm from "../NewApptForm/NewApptForm";
 import Appointments from "../../routes/Appointments/Appointments";
 import LoginForm from "../LoginForm/LoginForm";
-import NewScheduleForm from "../NewScheduleForm/NewScheduleForm";
+import NewScheduleForm from "../../routes/NewScheduleForm/NewScheduleForm";
 import Schedules from "../../routes/Schedules/Schedules";
 import PrivateRoute from "../Utils/PrivateRoute";
 import NotFound from "../NotFound/NotFound";
-import seedAppts from "../../seedAppts.json";
-import ApptContext from "../../contexts/ApptContext";
 import "./App.css";
 
 class App extends Component {
-  static contextType = ApptContext;
-
   render() {
-    seedAppts.forEach((appts) => this.context.apptList.push(appts));
     return (
       <div className="App">
         <header className="App__header">

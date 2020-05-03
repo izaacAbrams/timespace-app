@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./NewApptForm.css";
-import seedSchedules from "../../seedSchedules.json";
+import ScheduleContext from "../../contexts/ScheduleContext";
 import ApptContext from "../../contexts/ApptContext";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
@@ -10,50 +10,64 @@ class NewApptForm extends Component {
 
   state = {
     id: uuidv4(),
-    appt_date_time: "",
+    appt_date_time: moment().format(),
     name: "",
     email: "",
     service: "",
     notes: "",
     schedule: this.props.match.params.name,
+    questions: {
+      name: "What is your name?",
+      email: "What is your email address?",
+      date: "When would you like to make the appointment for?",
+      time: "What time would you like the appointment?",
+      service: "What is the appointment for?",
+      notes: "Do you have any special requests?",
+    },
   };
 
   handleSubmit(e) {
+    const {
+      id,
+      appt_date_time,
+      name,
+      email,
+      service,
+      notes,
+      schedule,
+    } = this.state;
     e.preventDefault();
     const newAppt = {
-      ...this.state,
+      id,
+      appt_date_time,
+      name,
+      email,
+      service,
+      notes,
+      schedule,
     };
-
     this.context.apptList.push(newAppt);
-    console.log(this.context.apptList);
   }
 
-  handleSchedule() {
-    return seedSchedules.find(
+  handleSchedule(scheduleContext) {
+    return scheduleContext.find(
       (schedule) => schedule.id === this.props.match.params.name
     );
   }
 
-  handleApptTimes() {
-    // seedAppts.forEach((appts) => this.context.apptList.push(appts));
-    // const timeOpen = new Date(
-    //   moment(this.handleSchedule().time_open, "hhmm").format()
-    // );
-    // const timeClosed = new Date(
-    //   moment(this.handleSchedule().time_closed, "hhmm").format()
-    // );
-
-    console.log(
-      moment(this.handleSchedule().time_open, "HHmm")
-        .set("minute", "30")
-        .format("HHmm")
-    );
-    const takenTimes = this.context.apptList.map((appt) => appt.appt_date_time);
+  handleApptTimes(scheduleContext) {
+    const takenTimes = this.context.apptList.map((appt) => {
+      if (this.handleSchedule(scheduleContext).id === appt.schedule) {
+        return appt.appt_date_time;
+      }
+    });
+    console.log(takenTimes);
     let timeList = [];
+
     for (
-      let i = parseInt(this.handleSchedule().time_open);
-      i <= parseInt(this.handleSchedule().time_closed);
-      i += parseInt(this.handleSchedule().services[0].duration)
+      let i = parseInt(this.handleSchedule(scheduleContext).time_open);
+      i <= parseInt(this.handleSchedule(scheduleContext).time_closed);
+      i += 100
     ) {
       timeList.push(moment(i, "hmm").format("HHmm"));
     }
@@ -69,6 +83,7 @@ class NewApptForm extends Component {
 
   handleDate(e) {
     const apptDate = e.target.value;
+
     this.setState({
       appt_date_time: apptDate,
     });
@@ -112,20 +127,27 @@ class NewApptForm extends Component {
     //   .set("minutes", "30")
     //   .format();
     // this.handleApptTimes();
-
+    // console.log(this.handleSchedule());
     return (
       <div className="NewApptForm">
         <header>
           <h1 className="NewApptForm__title">Schedule an appointment</h1>
         </header>
+        {/* {(context) => console.log(context.scheduleList)} */}
         <main className="NewApptForm__main">
           <form
             id="new-appointment"
             onSubmit={(e) => this.handleSubmit(e)}
             className="NewApptForm__form"
           >
-            <h1>{this.handleSchedule().schedule}</h1>
-
+            <ScheduleContext.Consumer>
+              {(scheduleContext) => (
+                <h1>
+                  {this.handleSchedule(scheduleContext.scheduleList).schedule}
+                  {/* {console.log(scheduleContext)} */}
+                </h1>
+              )}
+            </ScheduleContext.Consumer>
             <div className="NewApptForm__section">
               <label htmlFor="schedule_name">Name:</label>
               <input
@@ -163,13 +185,19 @@ class NewApptForm extends Component {
                 onChange={(e) => this.handleTime(e)}
                 required
               >
-                {this.handleApptTimes().map((time) => {
-                  return (
-                    <option key={time}>
-                      {moment(time, "hhmm").format("LT")}
-                    </option>
-                  );
-                })}
+                <ScheduleContext.Consumer>
+                  {(scheduleContext) =>
+                    this.handleApptTimes(scheduleContext.scheduleList).map(
+                      (time) => {
+                        return (
+                          <option key={time}>
+                            {moment(time, "hhmm").format("LT")}
+                          </option>
+                        );
+                      }
+                    )
+                  }
+                </ScheduleContext.Consumer>
               </select>
             </div>
             <div className="NewApptForm__section">
@@ -180,11 +208,16 @@ class NewApptForm extends Component {
                 onChange={(e) => this.handleService(e)}
                 required
               >
-                <option>Message</option>
-                <option>Spa stuff</option>
-                <option>Cucumber eyes</option>
-                <option>Hot towel</option>
-                <option>Nails</option>
+                <ScheduleContext.Consumer>
+                  {(scheduleContext) =>
+                    this.handleSchedule(
+                      scheduleContext.scheduleList
+                    ).services.map((service) => {
+                      console.log(service);
+                      return <option key={service.name}>{service.name}</option>;
+                    })
+                  }
+                </ScheduleContext.Consumer>
               </select>
             </div>
             <div className="NewApptForm__section">
@@ -195,6 +228,7 @@ class NewApptForm extends Component {
                 placeholder="Any extra notes for the staff?"
               ></textarea>
             </div>
+
             <button type="submit">Submit</button>
           </form>
         </main>

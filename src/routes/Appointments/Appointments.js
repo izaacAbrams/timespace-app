@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import "./Appointments.css";
 import seedSchedules from "../../seedSchedules.json";
 import ApptCard from "../../components/ApptCard/ApptCard";
@@ -8,7 +9,9 @@ import ApptContext from "../../contexts/ApptContext";
 
 class Appointments extends Component {
   static contextType = ApptContext;
-
+  state = {
+    selected_date: moment().format(),
+  };
   findSchedule() {
     return seedSchedules.find(
       (schedule) => schedule.id === this.props.match.params.id
@@ -17,17 +20,23 @@ class Appointments extends Component {
 
   filterAppts(filteredAppts) {
     return filteredAppts.filter(
-      (appt) => appt.schedule === this.props.match.params.id
+      (appt) =>
+        appt.schedule === this.props.match.params.id &&
+        moment(appt.appt_date_time).format("L") ===
+          moment(this.state.selected_date).format("L")
     );
-  }
-
-  componentDidMount() {
-    this.context.clearError();
+    // return scheduleFilter.filter(
+    //   (appt) =>
+    //     moment(appt.appt_date_time).format("L") ===
+    //     moment(this.state.selected_date).format("L")
+    // );
   }
 
   renderAppts() {
     const { apptList = [] } = this.context;
     const filteredAppts = this.filterAppts(apptList);
+    console.log(filteredAppts);
+
     return filteredAppts.map((appt) => (
       <ApptCard
         name={appt.name}

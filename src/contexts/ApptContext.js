@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import seedAppt from "../seedAppts.json";
 
 // export const nullAppt = {
 //   name: "",
@@ -9,12 +10,11 @@ import React, { Component } from "react";
 // };
 
 const ApptContext = React.createContext({
-  apptList: [],
+  apptList: seedAppt,
   error: null,
   setError: () => {},
   clearError: () => {},
   setAppt: () => {},
-  clearAppt: () => {},
 });
 
 export default ApptContext;
@@ -38,10 +38,6 @@ export class ApptProvider extends Component {
     this.setState({ apptList });
   };
 
-  // clearAppt = () => {
-  //   this.setAppt(nullAppt);
-  // };
-
   render() {
     const value = {
       apptList: this.state.apptList,
@@ -49,7 +45,6 @@ export class ApptProvider extends Component {
       setError: this.setError,
       clearError: this.setError,
       setAppt: this.setAppt,
-      clearAppt: this.clearAppt,
     };
     return (
       <ApptContext.Provider value={value}>
