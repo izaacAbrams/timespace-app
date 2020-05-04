@@ -47,21 +47,34 @@ class NewApptForm extends Component {
       schedule,
     };
     this.context.apptList.push(newAppt);
+    this.setState({
+      ...this.state,
+      id: uuidv4(),
+      appt_date_time: moment().format(),
+      name: "",
+      email: "",
+      service: "",
+      notes: "",
+      schedule: this.props.match.params.name,
+    });
   }
-
+ 
   handleSchedule(scheduleContext) {
     return scheduleContext.find(
       (schedule) => schedule.id === this.props.match.params.name
     );
   }
 
+  takenTimes(schedule) {
+    const currentSchedule = this.handleSchedule(schedule);
+    return this.context.apptList
+    .filter(appt => currentSchedule.id === appt.schedule)
+    .map(appt => appt.appt_date_time)
+  }
+
   handleApptTimes(scheduleContext) {
-    const takenTimes = this.context.apptList.map((appt) => {
-      if (this.handleSchedule(scheduleContext).id === appt.schedule) {
-        return appt.appt_date_time;
-      }
-    });
-    console.log(takenTimes);
+
+    let takenTimes = this.takenTimes(scheduleContext);
     let timeList = [];
 
     for (
@@ -122,18 +135,12 @@ class NewApptForm extends Component {
   }
 
   render() {
-    // const newDate = moment(`2020-05-01`)
-    //   .set("hour", "3")
-    //   .set("minutes", "30")
-    //   .format();
-    // this.handleApptTimes();
-    // console.log(this.handleSchedule());
+
     return (
       <div className="NewApptForm">
         <header>
           <h1 className="NewApptForm__title">Schedule an appointment</h1>
         </header>
-        {/* {(context) => console.log(context.scheduleList)} */}
         <main className="NewApptForm__main">
           <form
             id="new-appointment"
@@ -144,7 +151,6 @@ class NewApptForm extends Component {
               {(scheduleContext) => (
                 <h1>
                   {this.handleSchedule(scheduleContext.scheduleList).schedule}
-                  {/* {console.log(scheduleContext)} */}
                 </h1>
               )}
             </ScheduleContext.Consumer>
@@ -153,6 +159,7 @@ class NewApptForm extends Component {
               <input
                 type="text"
                 name="schedule_name"
+                value={this.state.name}
                 onChange={(e) => this.handleName(e)}
                 placeholder="Joe Smith"
                 required
@@ -162,6 +169,7 @@ class NewApptForm extends Component {
               <label htmlFor="schedule_email">Email:</label>
               <input
                 type="text"
+                value={this.state.email}
                 onChange={(e) => this.handleEmail(e)}
                 name="schedule_email"
                 placeholder="joe.smith@example.com"
@@ -204,6 +212,7 @@ class NewApptForm extends Component {
               <label htmlFor="schedule_services">Service:</label>
               <select
                 className="form-appt-type"
+                value={this.state.service}
                 name="schedule_services"
                 onChange={(e) => this.handleService(e)}
                 required
@@ -213,7 +222,6 @@ class NewApptForm extends Component {
                     this.handleSchedule(
                       scheduleContext.scheduleList
                     ).services.map((service) => {
-                      console.log(service);
                       return <option key={service.name}>{service.name}</option>;
                     })
                   }
@@ -224,6 +232,7 @@ class NewApptForm extends Component {
               <label htmlFor="notes">Comments:</label>
               <textarea
                 name="notes"
+                value={this.state.notes}
                 onChange={(e) => this.handleNotes(e)}
                 placeholder="Any extra notes for the staff?"
               ></textarea>

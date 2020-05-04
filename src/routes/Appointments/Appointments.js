@@ -35,17 +35,29 @@ class Appointments extends Component {
   renderAppts() {
     const { apptList = [] } = this.context;
     const filteredAppts = this.filterAppts(apptList);
-    console.log(filteredAppts);
+    console.log(
+      filteredAppts.sort(
+        (appt1, appt2) =>
+          moment(appt1.appt_date_time).format("HHmm") -
+          moment(appt2.appt_date_time).format("HHmm")
+      )
+    );
 
-    return filteredAppts.map((appt) => (
-      <ApptCard
-        name={appt.name}
-        key={appt.id}
-        schedule={appt.schedule}
-        service={appt.service}
-        appt={appt.appt_date_time}
-      />
-    ));
+    return filteredAppts
+      .map((appt) => (
+        <ApptCard
+          name={appt.name}
+          key={appt.id}
+          schedule={appt.schedule}
+          service={appt.service}
+          appt={appt.appt_date_time}
+        />
+      ))
+      .sort(
+        (appt1, appt2) =>
+          moment(appt1.appt_date_time).format("HHmm") -
+          moment(appt2.appt_date_time).format("HHmm")
+      );
   }
 
   render() {
