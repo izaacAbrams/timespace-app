@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "./Appointments.css";
-import seedSchedules from "../../seedSchedules.json";
 import ApptCard from "../../components/ApptCard/ApptCard";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import ApptContext from "../../contexts/ApptContext";
+import ScheduleContext from "../../contexts/ScheduleContext";
 
 class Appointments extends Component {
   static contextType = ApptContext;
   state = {
     selected_date: moment().format(),
   };
-  findSchedule() {
-    return seedSchedules.find(
+  findSchedule(scheduleContext) {
+    return scheduleContext.scheduleList.find(
       (schedule) => schedule.id === this.props.match.params.id
     );
   }
@@ -25,23 +25,17 @@ class Appointments extends Component {
         moment(appt.appt_date_time).format("L") ===
           moment(this.state.selected_date).format("L")
     );
-    // return scheduleFilter.filter(
-    //   (appt) =>
-    //     moment(appt.appt_date_time).format("L") ===
-    //     moment(this.state.selected_date).format("L")
-    // );
+  }
+
+  handleDateSubmit(date) {
+    this.setState({
+      selected_date: date,
+    });
   }
 
   renderAppts() {
     const { apptList = [] } = this.context;
     const filteredAppts = this.filterAppts(apptList);
-    console.log(
-      filteredAppts.sort(
-        (appt1, appt2) =>
-          moment(appt1.appt_date_time).format("HHmm") -
-          moment(appt2.appt_date_time).format("HHmm")
-      )
-    );
 
     return filteredAppts
       .map((appt) => (
@@ -76,14 +70,20 @@ class Appointments extends Component {
     return (
       <div className="Appointments">
         <section className="Appointments__date">
-          <form id="view-schedule">
-            <h2>{this.findSchedule().schedule}</h2>
-            <DatePicker />
+          <ScheduleContext.Consumer>
+            {(scheduleContext) => (
+              <form id="view-schedule">
+                <h2>{this.findSchedule(scheduleContext).schedule}</h2>
+                <DatePicker
+                  handleDateSubmit={(date) => this.handleDateSubmit(date)}
+                />
 
-            <Link to={`/${this.findSchedule().id}/new-appt`}>
-              New Appointment
-            </Link>
-          </form>
+                <Link to={`/${this.findSchedule(scheduleContext).id}/new-appt`}>
+                  New Appointment
+                </Link>
+              </form>
+            )}
+          </ScheduleContext.Consumer>
         </section>
         <main className="Appointments__main">{mainContent}</main>
       </div>

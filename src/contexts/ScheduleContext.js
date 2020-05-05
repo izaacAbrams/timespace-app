@@ -4,7 +4,7 @@ import seedSchedules from "../seedSchedules.json";
 const ScheduleContext = React.createContext({
   scheduleList: seedSchedules,
   error: null,
-  currentSchedule: "",
+  modal: false,
   setError: () => {},
   clearError: () => {},
   setSchedule: () => {},
@@ -33,7 +33,7 @@ export class ScheduleProvider extends Component {
   render() {
     const value = {
       scheduleList: this.state.scheduleList,
-      currentSchedule: this.state.currentSchedule,
+      modal: this.state.modal,
       error: this.state.error,
       setError: this.setError,
       clearError: this.setError,

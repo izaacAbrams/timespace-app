@@ -12,7 +12,8 @@ class Schedules extends Component {
     currentId: "",
   };
   handleEdit(id) {
-    this.context.currentSchedule = id;
+    this.context.modal = true;
+    this.setState({ currentId: id });
     document.querySelector(".modal").style.display = "block";
   }
 
@@ -26,7 +27,12 @@ class Schedules extends Component {
       document.querySelector(".modal").style.display = "block";
     }
   }
-
+  handleDelete(id) {
+    const schedule = this.context.scheduleList.findIndex((schedule) => schedule.id === id);
+    console.log(schedule);
+    this.context.scheduleList = this.context.scheduleList.filter(s => s.id !== id)
+    this.props.history.push('/schedules')
+  }
   renderHours() {
     let scheduleHours = [];
     for (let i = 100; i <= 2400; i += 100) {
@@ -35,20 +41,13 @@ class Schedules extends Component {
     return scheduleHours;
   }
 
-  renderEdit() {
-    console.log()
-    return document.querySelector(".display-modal") === null ? (
-            <React.Fragment />
-          ) : (
-            <EditScheduleForm />
-          );
-  }
   render() {
-    const renderEdit = (document.querySelector(".display-modal") === null ? (
-      <React.Fragment />
-    ) : (
-      <EditScheduleForm />
-    ));
+    const renderEdit =
+      this.context.modal === true ? (
+        <EditScheduleForm id={this.state.currentId} {...this.props.history} />
+      ) : (
+        <React.Fragment />
+      );
     return (
       <div>
         <div className="Schedule__header">
@@ -58,7 +57,7 @@ class Schedules extends Component {
         <div className="modal" onClick={(e) => this.handleClose(e)}>
           <div className="display-modal">
             <p className="modal-close">x</p>
-            <EditScheduleForm />
+            {renderEdit}
           </div>
         </div>
         {this.context.scheduleList.map((schedule) => (
@@ -67,6 +66,7 @@ class Schedules extends Component {
             id={schedule.id}
             name={schedule.schedule}
             handleEdit={(e) => this.handleEdit(e)}
+            handleDelete={(id) => this.handleDelete(id)}
             {...this.props.history}
           />
         ))}

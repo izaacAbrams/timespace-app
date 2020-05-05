@@ -58,7 +58,7 @@ class NewApptForm extends Component {
       schedule: this.props.match.params.name,
     });
   }
- 
+
   handleSchedule(scheduleContext) {
     return scheduleContext.find(
       (schedule) => schedule.id === this.props.match.params.name
@@ -68,12 +68,11 @@ class NewApptForm extends Component {
   takenTimes(schedule) {
     const currentSchedule = this.handleSchedule(schedule);
     return this.context.apptList
-    .filter(appt => currentSchedule.id === appt.schedule)
-    .map(appt => appt.appt_date_time)
+      .filter((appt) => currentSchedule.id === appt.schedule)
+      .map((appt) => appt.appt_date_time);
   }
 
   handleApptTimes(scheduleContext) {
-
     let takenTimes = this.takenTimes(scheduleContext);
     let timeList = [];
 
@@ -94,6 +93,21 @@ class NewApptForm extends Component {
     return timeList;
   }
 
+  handleServices(scheduleContext) {
+    const services = this.handleSchedule(scheduleContext.scheduleList).services;
+    return typeof services ===
+      "string" ? (
+      <option key={services}>
+        {services}
+      </option>
+    ) : (
+      services.map(
+        (service) => {
+          return <option key={service.name}>{service.name}</option>;
+        }
+      )
+    );
+  }
   handleDate(e) {
     const apptDate = e.target.value;
 
@@ -135,7 +149,6 @@ class NewApptForm extends Component {
   }
 
   render() {
-
     return (
       <div className="NewApptForm">
         <header>
@@ -218,13 +231,7 @@ class NewApptForm extends Component {
                 required
               >
                 <ScheduleContext.Consumer>
-                  {(scheduleContext) =>
-                    this.handleSchedule(
-                      scheduleContext.scheduleList
-                    ).services.map((service) => {
-                      return <option key={service.name}>{service.name}</option>;
-                    })
-                  }
+                  {(scheduleContext) => this.handleServices(scheduleContext)}
                 </ScheduleContext.Consumer>
               </select>
             </div>
@@ -237,7 +244,6 @@ class NewApptForm extends Component {
                 placeholder="Any extra notes for the staff?"
               ></textarea>
             </div>
-
             <button type="submit">Submit</button>
           </form>
         </main>

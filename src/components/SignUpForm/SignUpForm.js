@@ -3,7 +3,7 @@ import "./SignUpForm.css";
 class SignUpForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
-    this.props.history.push("/");
+    this.props.history.push("/login");
   }
   render() {
     return (

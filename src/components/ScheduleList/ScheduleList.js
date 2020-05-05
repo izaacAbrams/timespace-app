@@ -14,7 +14,9 @@ export default class ScheduleList extends Component {
           <button onClick={() => this.props.handleEdit(this.props.id)}>
             Edit
           </button>
-          <button>Delete</button>
+          <button onClick={() => this.props.handleDelete(this.props.id)}>
+            Delete
+          </button>
         </div>
       </div>
     );
