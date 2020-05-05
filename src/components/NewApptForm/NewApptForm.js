@@ -68,7 +68,12 @@ class NewApptForm extends Component {
   takenTimes(schedule) {
     const currentSchedule = this.handleSchedule(schedule);
     return this.context.apptList
-      .filter((appt) => currentSchedule.id === appt.schedule)
+      .filter(
+        (appt) =>
+          currentSchedule.id === appt.schedule &&
+          moment(currentSchedule.appt_date_time).format("L") ===
+            moment(this.state.appt_date_time).format("L")
+      )
       .map((appt) => appt.appt_date_time);
   }
 
@@ -95,17 +100,12 @@ class NewApptForm extends Component {
 
   handleServices(scheduleContext) {
     const services = this.handleSchedule(scheduleContext.scheduleList).services;
-    return typeof services ===
-      "string" ? (
-      <option key={services}>
-        {services}
-      </option>
+    return typeof services === "string" ? (
+      <option key={services}>{services}</option>
     ) : (
-      services.map(
-        (service) => {
-          return <option key={service.name}>{service.name}</option>;
-        }
-      )
+      services.map((service) => {
+        return <option key={service.name}>{service.name}</option>;
+      })
     );
   }
   handleDate(e) {

@@ -12,6 +12,7 @@ import seedAppt from "../seedAppts.json";
 const ApptContext = React.createContext({
   apptList: seedAppt,
   error: null,
+  modal: false,
   setError: () => {},
   clearError: () => {},
   setAppt: () => {},
@@ -42,6 +43,7 @@ export class ApptProvider extends Component {
     const value = {
       apptList: this.state.apptList,
       error: this.state.error,
+      modal: this.state.modal,
       setError: this.setError,
       clearError: this.setError,
       setAppt: this.setAppt,

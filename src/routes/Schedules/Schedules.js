@@ -23,15 +23,17 @@ class Schedules extends Component {
       e.target === document.querySelector(".modal")
     ) {
       document.querySelector(".modal").style.display = "none";
+      this.props.history.push(`/schedules`);
+      this.context.modal = false;
     } else {
       document.querySelector(".modal").style.display = "block";
     }
   }
   handleDelete(id) {
-    const schedule = this.context.scheduleList.findIndex((schedule) => schedule.id === id);
-    console.log(schedule);
-    this.context.scheduleList = this.context.scheduleList.filter(s => s.id !== id)
-    this.props.history.push('/schedules')
+    this.context.scheduleList = this.context.scheduleList.filter(
+      (s) => s.id !== id
+    );
+    this.props.history.push("/schedules");
   }
   renderHours() {
     let scheduleHours = [];

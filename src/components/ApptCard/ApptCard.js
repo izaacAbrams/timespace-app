@@ -9,8 +9,12 @@ export default class ApptCard extends Component {
         <h3>{this.props.name}</h3>
         <p>Service: {this.props.service}</p>
         <p>Time: {apptTime}</p>
-        <button>Edit</button>
-        <button>Delete</button>
+        <button onClick={() => this.props.handleEdit(this.props.id)}>
+          Edit
+        </button>
+        <button onClick={() => this.props.handleDelete(this.props.id)}>
+          Delete
+        </button>
       </div>
     );
   }

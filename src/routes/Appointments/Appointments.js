@@ -4,6 +4,7 @@ import moment from "moment";
 import "./Appointments.css";
 import ApptCard from "../../components/ApptCard/ApptCard";
 import DatePicker from "../../components/DatePicker/DatePicker";
+import EditApptForm from "../../components/EditApptForm/EditApptForm";
 import ApptContext from "../../contexts/ApptContext";
 import ScheduleContext from "../../contexts/ScheduleContext";
 
@@ -11,6 +12,7 @@ class Appointments extends Component {
   static contextType = ApptContext;
   state = {
     selected_date: moment().format(),
+    currentId: "",
   };
   findSchedule(scheduleContext) {
     return scheduleContext.scheduleList.find(
@@ -33,25 +35,51 @@ class Appointments extends Component {
     });
   }
 
+  handleEdit(id) {
+    this.context.modal = true;
+    this.setState({ currentId: id });
+    document.querySelector(".modal").style.display = "block";
+  }
+
+  handleClose(e) {
+    if (
+      e.target === document.querySelector(".modal-close") ||
+      e.target === document.querySelector(".modal")
+    ) {
+      document.querySelector(".modal").style.display = "none";
+      this.props.history.push(`/schedules/${this.props.match.params.id}`);
+      this.context.modal = false;
+    } else {
+      document.querySelector(".modal").style.display = "block";
+    }
+  }
+
+  handleDelete(id) {
+    this.context.apptList = this.context.apptList.filter((a) => a.id !== id);
+    this.props.history.push(`/schedules/${this.props.match.params.id}`);
+  }
+
   renderAppts() {
     const { apptList = [] } = this.context;
     const filteredAppts = this.filterAppts(apptList);
 
-    return filteredAppts
-      .map((appt) => (
-        <ApptCard
-          name={appt.name}
-          key={appt.id}
-          schedule={appt.schedule}
-          service={appt.service}
-          appt={appt.appt_date_time}
-        />
-      ))
-      .sort(
-        (appt1, appt2) =>
-          moment(appt1.appt_date_time).format("HHmm") -
-          moment(appt2.appt_date_time).format("HHmm")
-      );
+    filteredAppts.sort(
+      (appt1, appt2) =>
+        moment(appt1.appt_date_time).format("HHmm") -
+        moment(appt2.appt_date_time).format("HHmm")
+    );
+
+    return filteredAppts.map((appt) => (
+      <ApptCard
+        name={appt.name}
+        key={appt.id}
+        id={appt.id}
+        service={appt.service}
+        appt={appt.appt_date_time}
+        handleEdit={(id) => this.handleEdit(id)}
+        handleDelete={(id) => this.handleDelete(id)}
+      />
+    ));
   }
 
   render() {
@@ -67,6 +95,12 @@ class Appointments extends Component {
     } else {
       mainContent = this.renderAppts();
     }
+    const renderEdit =
+      this.context.modal === true ? (
+        <EditApptForm id={this.state.currentId} {...this.props} />
+      ) : (
+        <React.Fragment />
+      );
     return (
       <div className="Appointments">
         <section className="Appointments__date">
@@ -85,6 +119,12 @@ class Appointments extends Component {
             )}
           </ScheduleContext.Consumer>
         </section>
+        <div className="modal" onClick={(e) => this.handleClose(e)}>
+          <div className="display-modal">
+            <p className="modal-close">x</p>
+            {renderEdit}
+          </div>
+        </div>
         <main className="Appointments__main">{mainContent}</main>
       </div>
     );
