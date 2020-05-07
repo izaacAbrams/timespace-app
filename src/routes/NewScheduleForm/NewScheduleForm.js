@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
+import ServiceForm from "../../components/ServiceForm/ServiceForm";
 import ScheduleContext from "../../contexts/ScheduleContext";
 import "./NewScheduleForm.css";
 
@@ -10,8 +11,8 @@ class NewScheduleForm extends Component {
     id: uuidv4(),
     schedule: "",
     time_open: "100",
-    time_closed: "2400",
-    services: "",
+    time_closed: "2300",
+    services: [],
   };
 
   handleSubmit(e) {
@@ -29,6 +30,25 @@ class NewScheduleForm extends Component {
     return scheduleHours;
   }
 
+  renderServices() {
+    if (this.state.services.length === 0) {
+      return <React.Fragment />;
+    } else if (this.state.services.length === 1) {
+      return (
+        <p>
+          {this.state.services[0].name} - {this.state.services[0].duration} mins
+        </p>
+      );
+    } else {
+      return this.state.services.map((service) => {
+        return (
+          <p key={service.name + service.duration}>
+            {service.name} - {service.duration} mins
+          </p>
+        );
+      });
+    }
+  }
   handleName(e) {
     this.setState({
       schedule: e.target.value,
@@ -46,7 +66,7 @@ class NewScheduleForm extends Component {
   handleTimeClosed(e) {
     let timeClosed = moment(e.target.value, "h:mm a").format("HHmm");
     if (timeClosed === "0000") {
-      timeClosed = "2400";
+      timeClosed = "2300";
     }
     this.setState({
       time_closed: timeClosed,
@@ -54,13 +74,53 @@ class NewScheduleForm extends Component {
   }
 
   handleServices(e) {
-    let servicesArray = e.target.value.split(",");
-    console.log(servicesArray.map((service) => service.trim()));
     this.setState({
       services: e.target.value,
     });
   }
+
+  handleServicesModal(e) {
+    e.preventDefault();
+    this.context.services_modal = true;
+    document.querySelector(".modal").style.display = "block";
+    this.props.history.push("/new-schedule");
+  }
+
+  handleServicesSubmit(name, duration) {
+    const addService = {
+      name,
+      duration,
+    };
+
+    this.state.services.push(addService);
+    this.context.services_modal = false;
+    this.props.history.push("/new-schedule");
+  }
+  handleClose(e) {
+    if (
+      e.target === document.querySelector(".modal-close") ||
+      e.target === document.querySelector(".modal") ||
+      e.target === document.querySelector(".add_btn")
+    ) {
+      document.querySelector(".modal").style.display = "none";
+      this.props.history.push(`/new-schedule`);
+      this.context.modal = false;
+    } else {
+      document.querySelector(".modal").style.display = "block";
+    }
+  }
+
   render() {
+    const renderServiceModal =
+      this.context.services_modal === true ? (
+        <ServiceForm
+          handleServicesSubmit={(services, duration) =>
+            this.handleServicesSubmit(services, duration)
+          }
+        />
+      ) : (
+        <React.Fragment />
+      );
     return (
       <div className="NewSchedule">
         <header>
@@ -106,14 +166,14 @@ class NewScheduleForm extends Component {
             </div>
             <div className="NewSchedule__section">
               <label htmlFor="services">Services:</label>
-              <input
-                type="text"
-                onChange={(e) => this.handleServices(e)}
-                name="services"
-              />
-              <p className="NewSchedule__services_p">
-                (If multiple, separate with comma)
-              </p>
+              {this.renderServices()}
+              <button onClick={(e) => this.handleServicesModal(e)}>New</button>
+              <div className="modal" onClick={(e) => this.handleClose(e)}>
+                <div className="display-modal">
+                  <p className="modal-close">x</p>
+                  {renderServiceModal}
+                </div>
+              </div>
             </div>
 
             <button type="submit">Submit</button>

@@ -27,3 +27,19 @@
   display: block;
   margin: auto;
 }
+
+.time-blocks {
+  cursor: pointer;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+.time-list {
+  cursor: pointer;
+  text-align: center;
+}
+
+.time-blocks:hover,
+.selected {
+  background-color: darkgray;
+}

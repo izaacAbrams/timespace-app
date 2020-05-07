@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import ScheduleContext from "../../contexts/ScheduleContext";
+import ServiceForm from "../ServiceForm/ServiceForm";
 import "./EditScheduleForm.css";
 
 export default class EditScheduleForm extends Component {
@@ -112,6 +113,7 @@ export default class EditScheduleForm extends Component {
             ))}
           </select>
         </div>
+        <ServiceForm />
         <button type="submit">Submit</button>
       </form>
     );
