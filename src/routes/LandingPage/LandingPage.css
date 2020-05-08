@@ -8,3 +8,7 @@
 .LandingPage__title {
   padding: 15px;
 }
+
+.LandingPage__button {
+  background-color: white;
+}
