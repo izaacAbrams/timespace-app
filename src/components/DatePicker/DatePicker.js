@@ -3,31 +3,62 @@ import moment from "moment";
 
 export default class DatePicker extends Component {
   state = {
-    current_date: moment().format(),
+    currentWeek: 0,
+    dot: null,
   };
-  handleDate(e) {
-    this.setState({
-      current_date: moment(e.target.value).format(),
-    });
-  }
   handleSubmit(e) {
-    e.preventDefault();
-    this.props.handleDateSubmit(this.state.current_date);
+    this.props.handleDateSubmit(e.currentTarget.getAttribute("id"));
+  }
+  handleDateCards() {
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+      if (this.state.currentWeek !== 0) {
+        let dates = moment().add(this.state.currentWeek, "weeks");
+        const currentWeek = dates.add(i, "days").format();
+        week.push(currentWeek);
+      } else {
+        let dates = moment();
+        const currentWeek = dates.add(i, "days").format();
+        week.push(currentWeek);
+      }
+    }
+    return week;
   }
 
+  handlePrevious(e) {
+    e.preventDefault();
+    this.setState({
+      currentWeek: this.state.currentWeek - 1,
+    });
+  }
+
+  handleNext(e) {
+    e.preventDefault();
+    this.setState({
+      currentWeek: this.state.currentWeek + 1,
+    });
+  }
   render() {
     return (
       <div className="form-section">
-        <label htmlFor="schedule-date">Date:</label>
-        <input
-          type="date"
-          onChange={(e) => this.handleDate(e)}
-          name="schedule-date"
-          required
-        />
-        <button onClick={(e) => this.handleSubmit(e)} type="submit">
-          Submit
-        </button>
+        <button onClick={(e) => this.handlePrevious(e)}>Back</button>
+        {this.handleDateCards().map((date) => {
+          return (
+            <div
+              className="date-card-container"
+              onClick={(e) => this.handleSubmit(e)}
+              key={date}
+              id={date}
+            >
+              <div className="date-card-wrapper">
+                <span className="date-card-date">
+                  {moment(date).format("M/DD")}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+        <button onClick={(e) => this.handleNext(e)}>Next</button>
       </div>
     );
   }

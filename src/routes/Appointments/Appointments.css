@@ -57,3 +57,19 @@
   margin: 0;
   font-size: 18px;
 }
+
+.date-card-container {
+  display: inline-block;
+  border: 1px solid black;
+  width: 10%;
+  height: 60px;
+  cursor: pointer;
+}
+
+.date-card-wrapper {
+  padding: 15px 0;
+}
+
+.date-card-date {
+  font-size: 22px;
+}

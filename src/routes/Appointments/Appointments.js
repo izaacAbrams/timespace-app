@@ -110,6 +110,7 @@ class Appointments extends Component {
                 <h2>{this.findSchedule(scheduleContext).schedule}</h2>
                 <DatePicker
                   handleDateSubmit={(date) => this.handleDateSubmit(date)}
+                  apptList={this.filterAppts(this.context.apptList)}
                 />
 
                 <Link to={`/${this.findSchedule(scheduleContext).id}/new-appt`}>

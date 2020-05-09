@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import seedAppt from "../seedAppts.json";
+import moment from "moment";
 
 // export const nullAppt = {
 //   name: "",

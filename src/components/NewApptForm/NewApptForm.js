@@ -27,7 +27,7 @@ class NewApptForm extends Component {
 
       notes: "Do you have any special requests?",
     },
-    input_error: null,
+    error_name: false,
   };
 
   handleSubmit(e) {
@@ -84,7 +84,7 @@ class NewApptForm extends Component {
 
   handleApptTimes(scheduleContext) {
     let takenTimes = this.takenTimes(scheduleContext);
-
+    console.log(moment().format());
     let timeList = [];
     let serviceDuration = this.handleSchedule(scheduleContext).services.find(
       (service) => service.name === this.state.service
@@ -124,7 +124,37 @@ class NewApptForm extends Component {
     });
   }
 
+  handleChange = (e) => {
+    //   e.preventDefault()
+    //   const {name, value} = e.target
+    //   let errors = this.state.errors
+
+    // switch(name) {
+    //   case 'name':
+    //     errors.name =
+    //     value.trim().length < 1
+    //     ? 'Please enter your name'
+    //     : false
+
+    //     break;
+    if (this.state.error === true) {
+      document.querySelector(".NewAppt_btn").disabled = true;
+    }
+  };
+
+  // }
   handleName(e) {
+    // console.log(e.target)
+    if (e.target.value.trim().length < 2) {
+      //   console.log(e.target)
+      this.setState({
+        error_name: true,
+      });
+
+      //     : this.setState({
+      //         error_name: false,
+      //       });
+    }
     this.setState({
       name: e.target.value,
     });
@@ -147,11 +177,12 @@ class NewApptForm extends Component {
   }
   handleTime(e) {
     const currentButton = document.getElementById(`${e.target.id}`);
-    document.querySelector(".form-time").childNodes.forEach(time =>
-      time.classList.remove('selected'))
-       currentButton.classList.toggle("selected");
-    
-       const apptTime = moment(
+    document
+      .querySelector(".form-time")
+      .childNodes.forEach((time) => time.classList.remove("selected"));
+    currentButton.classList.toggle("selected");
+
+    const apptTime = moment(
       `${this.state.appt_date} ${e.target.innerHTML}`,
       "YYYY-MM-DD HH:mm a"
     ).format();
@@ -163,6 +194,7 @@ class NewApptForm extends Component {
 
   handleNext(e) {
     e.preventDefault();
+
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
     });
@@ -196,7 +228,9 @@ class NewApptForm extends Component {
     return currentQuestion !== undefined ? (
       <div className="NewAppt__buttons">
         {backButton}
-        <button onClick={(e) => this.handleNext(e)}>Next</button>
+        <button className="NewAppt__btn" onClick={(e) => this.handleNext(e)}>
+          Next
+        </button>
       </div>
     ) : (
       <div className="NewAppt__buttons">
@@ -221,6 +255,11 @@ class NewApptForm extends Component {
             placeholder="Joe Smith"
             required
           />
+          {this.state.error_name ? (
+            <p>Please enter your name</p>
+          ) : (
+            <React.Fragment />
+          )}
         </div>
       );
     } else if (currentIndex === "email") {
