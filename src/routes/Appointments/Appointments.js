@@ -30,6 +30,13 @@ class Appointments extends Component {
   }
 
   handleDateSubmit(date) {
+    let dates = document.getElementsByClassName("date-card-container");
+    for (let i = 0; i < dates.length; i++) {
+      moment(dates[i].id).format("MMDD") === moment(date).format("MMDD")
+        ? dates[i].className += "selected"
+        : dates[i].classList.add("date-card-container");
+    }
+
     this.setState({
       selected_date: date,
     });
@@ -62,7 +69,6 @@ class Appointments extends Component {
   renderAppts() {
     const { apptList = [] } = this.context;
     const filteredAppts = this.filterAppts(apptList);
-
     filteredAppts.sort(
       (appt1, appt2) =>
         moment(appt1.appt_date_time).format("HHmm") -
@@ -111,6 +117,7 @@ class Appointments extends Component {
                 <DatePicker
                   handleDateSubmit={(date) => this.handleDateSubmit(date)}
                   apptList={this.filterAppts(this.context.apptList)}
+                  selected={this.state.selected_date}
                 />
 
                 <Link to={`/${this.findSchedule(scheduleContext).id}/new-appt`}>

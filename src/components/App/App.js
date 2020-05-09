@@ -9,7 +9,8 @@ import LoginForm from "../LoginForm/LoginForm";
 import NewScheduleForm from "../../routes/NewScheduleForm/NewScheduleForm";
 import Schedules from "../../routes/Schedules/Schedules";
 import PrivateRoute from "../Utils/PrivateRoute";
-import NotFound from "../NotFound/NotFound";
+import NotFound from "../../routes/NotFound/NotFound";
+import Success from "../../routes/Success/Success";
 import "./App.css";
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
             <PrivateRoute path={"/schedules/:id"} component={Appointments} />
             <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
             <PrivateRoute path={"/schedules"} component={Schedules} />
+            <Route path={"/success"} component={Success} />
             <Route component={NotFound} />
           </Switch>
         </main>

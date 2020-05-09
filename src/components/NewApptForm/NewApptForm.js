@@ -61,6 +61,7 @@ class NewApptForm extends Component {
       notes: "",
       schedule: this.props.match.params.name,
     });
+    this.props.history.push('/success')
   }
 
   handleSchedule(scheduleContext) {

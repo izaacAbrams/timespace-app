@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import moment from "moment";
-
+import "./DatePicker.css";
 export default class DatePicker extends Component {
   state = {
     currentWeek: 0,
-    dot: null,
   };
   handleSubmit(e) {
     this.props.handleDateSubmit(e.currentTarget.getAttribute("id"));
@@ -31,7 +30,6 @@ export default class DatePicker extends Component {
       currentWeek: this.state.currentWeek - 1,
     });
   }
-
   handleNext(e) {
     e.preventDefault();
     this.setState({
@@ -45,7 +43,12 @@ export default class DatePicker extends Component {
         {this.handleDateCards().map((date) => {
           return (
             <div
-              className="date-card-container"
+              className={
+                moment(this.props.selected).format("MMDD") ===
+                moment(date).format("MMDD")
+                  ? "date-card-container selected"
+                  : "date-card-container"
+              }
               onClick={(e) => this.handleSubmit(e)}
               key={date}
               id={date}

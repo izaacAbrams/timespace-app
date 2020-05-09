@@ -2,16 +2,19 @@ import React, { Component } from "react";
 import seedAppt from "../seedAppts.json";
 import moment from "moment";
 
-// export const nullAppt = {
-//   name: "",
-//   id: "",
-//   service: [],
-//   schedule_id: "",
-//   apt_date_time: "",
-// };
-
+export function createSeed() {
+  let todayApptSeed = [];
+  seedAppt.map((appt) => {
+    const apptTime = moment(appt.appt_date_time).format("HHmm");
+    return todayApptSeed.push({
+      ...appt,
+      appt_date_time: moment(apptTime, "HHmm").format(),
+    });
+  });
+  return todayApptSeed;
+}
 const ApptContext = React.createContext({
-  apptList: seedAppt,
+  apptList: createSeed(),
   error: null,
   modal: false,
   setError: () => {},

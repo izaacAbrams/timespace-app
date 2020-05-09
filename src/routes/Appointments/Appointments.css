@@ -73,3 +73,7 @@
 .date-card-date {
   font-size: 22px;
 }
+
+.selected {
+  background-color: darkgray;
+}
