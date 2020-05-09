@@ -16,14 +16,14 @@ class Appointments extends Component {
   };
   findSchedule(scheduleContext) {
     return scheduleContext.scheduleList.find(
-      (schedule) => schedule.id === this.props.match.params.id
+      (schedule) => schedule.schedule_url === this.props.match.params.url
     );
   }
 
   filterAppts(filteredAppts) {
     return filteredAppts.filter(
       (appt) =>
-        appt.schedule === this.props.match.params.id &&
+        appt.schedule === this.props.match.params.url &&
         moment(appt.appt_date_time).format("L") ===
           moment(this.state.selected_date).format("L")
     );
@@ -120,7 +120,7 @@ class Appointments extends Component {
                   selected={this.state.selected_date}
                 />
 
-                <Link to={`/${this.findSchedule(scheduleContext).id}/new-appt`}>
+                <Link to={`/${this.findSchedule(scheduleContext).schedule_url}/new-appt`}>
                   New Appointment
                 </Link>
               </form>

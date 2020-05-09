@@ -67,6 +67,7 @@ class Schedules extends Component {
             key={schedule.id}
             id={schedule.id}
             name={schedule.schedule}
+            url={schedule.schedule_url}
             handleEdit={(e) => this.handleEdit(e)}
             handleDelete={(id) => this.handleDelete(id)}
             {...this.props.history}

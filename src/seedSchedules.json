@@ -2,6 +2,7 @@
   {
     "id": "1",
     "schedule": "Sally's Salon & Spa",
+    "schedule_url": "sallys-salon-spa",
     "time_open": "0800",
     "time_closed": "1700",
     "services": [
@@ -26,6 +27,7 @@
   {
     "id": "2",
     "schedule": "Mike's Pokemon Training",
+    "schedule_url": "mikes-pokemon-training",
     "time_open": "0600",
     "time_closed": "2200",
     "services": [
@@ -46,6 +48,7 @@
   {
     "id": "3",
     "schedule": "Music to study to",
+    "schedule_url": "music-to-study-to",
     "time_open": "0700",
     "time_closed": "2000",
     "services": [

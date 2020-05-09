@@ -50,8 +50,13 @@ class NewScheduleForm extends Component {
     }
   }
   handleName(e) {
+    const urlName = e.target.value
+      .replace(/[^\w\s]/gi, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase();
     this.setState({
       schedule: e.target.value,
+      schedule_url: urlName,
     });
   }
 
@@ -73,12 +78,6 @@ class NewScheduleForm extends Component {
     });
   }
 
-  handleServices(e) {
-    this.setState({
-      services: e.target.value,
-    });
-  }
-
   handleServicesModal(e) {
     e.preventDefault();
     this.context.services_modal = true;
@@ -91,10 +90,12 @@ class NewScheduleForm extends Component {
       name,
       duration,
     };
-
     this.state.services.push(addService);
     this.context.services_modal = false;
     this.props.history.push("/new-schedule");
+    if (this.state.schedule !== "") {
+      document.querySelector(".submit-btn").disabled = false;
+    }
   }
   handleClose(e) {
     if (
@@ -114,6 +115,7 @@ class NewScheduleForm extends Component {
     const renderServiceModal =
       this.context.services_modal === true ? (
         <ServiceForm
+          header="Add New Service"
           handleServicesSubmit={(services, duration) =>
             this.handleServicesSubmit(services, duration)
           }
@@ -176,7 +178,9 @@ class NewScheduleForm extends Component {
               </div>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className="submit-btn" disabled={true}>
+              Submit
+            </button>
           </form>
         </section>
       </div>

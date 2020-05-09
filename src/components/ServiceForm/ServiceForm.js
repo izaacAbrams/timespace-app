@@ -15,6 +15,7 @@ export default class ServiceForm extends Component {
     });
   }
   handleDuration(e) {
+    document.querySelector(".add_btn").classList.remove("disabled");
     this.setState({
       duration: e.target.value.split(" ")[0],
     });
@@ -22,7 +23,7 @@ export default class ServiceForm extends Component {
   render() {
     return (
       <div className="ServiceForm__section">
-        <h2>Add New Service</h2>
+        <h2>{this.props.header}</h2>
         <div className="ServiceForm__name">
           <label htmlFor="service">Service:</label>
           <input
@@ -39,7 +40,7 @@ export default class ServiceForm extends Component {
             <option>60 min</option>
           </select>
         </div>
-        <button className="add_btn" onClick={(e) => this.handleAdd(e)}>
+        <button className="add_btn disabled" onClick={(e) => this.handleAdd(e)}>
           Add
         </button>
       </div>

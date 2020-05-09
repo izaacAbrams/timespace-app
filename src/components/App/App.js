@@ -27,7 +27,7 @@ class App extends Component {
             <Route path={"/signup"} component={SignUpForm} />
             <Route path={"/login"} component={LoginForm} />
             <Route path={"/:name/new-appt"} component={NewApptForm} />
-            <PrivateRoute path={"/schedules/:id"} component={Appointments} />
+            <PrivateRoute path={"/schedules/:url"} component={Appointments} />
             <PrivateRoute path={"/new-schedule"} component={NewScheduleForm} />
             <PrivateRoute path={"/schedules"} component={Schedules} />
             <Route path={"/success"} component={Success} />

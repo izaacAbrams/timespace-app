@@ -3,7 +3,7 @@ import "./ScheduleList.css";
 
 export default class ScheduleList extends Component {
   handleScheduleClick() {
-    this.props.push("/schedules/" + this.props.id);
+    this.props.push("/schedules/" + this.props.url);
   }
 
   render() {

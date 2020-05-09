@@ -8,6 +8,7 @@ export default class EditApptForm extends Component {
   state = {
     name: "",
     email: "",
+    appt_date: "",
     appt_date_time: "",
     service: "",
   };
@@ -114,12 +115,24 @@ export default class EditApptForm extends Component {
   }
   handleDate(e) {
     this.setState({
-      appt_date_time: e.target.value,
+      appt_date: e.target.value,
+    });
+  }
+  handleTime(e) {
+    document.querySelector(".submit_btn").disabled = false;
+    moment(
+      `${this.state.appt_date} ${e.target.value}`,
+      "YYYY-MM-DD H:mm P"
+    ).format();
+    console.log(this.state.appt_date, e.target.value);
+    this.setState({
+      appt_date_time: moment(
+        `${this.state.appt_date} ${e.target.value}`,
+        "YYYY-MM-DD H:mm P"
+      ).format(),
     });
   }
   render() {
-    console.log(this.props);
-
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <h3>Edit Appointment</h3>
@@ -131,11 +144,16 @@ export default class EditApptForm extends Component {
         />
         <div className="EditAppt__section">
           <label htmlFor="date">Date:</label>
-          <input type="date" onClick={(e) => this.handleDate(e)} name="date" />
+          <input type="date" onChange={(e) => this.handleDate(e)} name="date" />
         </div>
         <div className="EditAppt__section">
           <label htmlFor="hour_open">Time:</label>
-          <select className="EditAppt__hours" name="hour_closed" required>
+          <select
+            className="EditAppt__hours"
+            onClick={(e) => this.handleTime(e)}
+            name="hour_closed"
+            required
+          >
             <ScheduleContext.Consumer>
               {(scheduleContext) =>
                 this.handleApptTimes(scheduleContext.scheduleList).map(
@@ -151,7 +169,9 @@ export default class EditApptForm extends Component {
             </ScheduleContext.Consumer>
           </select>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit_btn" disabled={true}>
+          Submit
+        </button>
       </form>
     );
   }

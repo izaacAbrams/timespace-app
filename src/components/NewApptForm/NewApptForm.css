@@ -43,3 +43,8 @@
 .selected {
   background-color: darkgray;
 }
+
+.disabled {
+  pointer-events: none;
+  color: grey;
+}

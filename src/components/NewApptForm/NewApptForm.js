@@ -66,7 +66,7 @@ class NewApptForm extends Component {
 
   handleSchedule(scheduleContext) {
     return scheduleContext.find(
-      (schedule) => schedule.id === this.props.match.params.name
+      (schedule) => schedule.schedule_url === this.props.match.params.name
     );
   }
 
@@ -85,7 +85,6 @@ class NewApptForm extends Component {
 
   handleApptTimes(scheduleContext) {
     let takenTimes = this.takenTimes(scheduleContext);
-    console.log(moment().format());
     let timeList = [];
     let serviceDuration = this.handleSchedule(scheduleContext).services.find(
       (service) => service.name === this.state.service
@@ -119,42 +118,18 @@ class NewApptForm extends Component {
     );
   }
   handleDate(e) {
+    document.getElementById("next_btn").classList.remove("disabled");
     const apptDate = e.target.value;
     this.setState({
       appt_date: apptDate,
     });
   }
 
-  handleChange = (e) => {
-    //   e.preventDefault()
-    //   const {name, value} = e.target
-    //   let errors = this.state.errors
-
-    // switch(name) {
-    //   case 'name':
-    //     errors.name =
-    //     value.trim().length < 1
-    //     ? 'Please enter your name'
-    //     : false
-
-    //     break;
-    if (this.state.error === true) {
-      document.querySelector(".NewAppt_btn").disabled = true;
-    }
-  };
-
-  // }
   handleName(e) {
-    // console.log(e.target)
-    if (e.target.value.trim().length < 2) {
-      //   console.log(e.target)
-      this.setState({
-        error_name: true,
-      });
-
-      //     : this.setState({
-      //         error_name: false,
-      //       });
+    if (e.target.value.trim().length > 2) {
+      document.getElementById("next_btn").classList.remove('disabled');
+    } else {
+       document.getElementById("next_btn").classList.add("disabled");
     }
     this.setState({
       name: e.target.value,
@@ -162,11 +137,21 @@ class NewApptForm extends Component {
   }
 
   handleEmail(e) {
-    this.setState({
-      email: e.target.value,
-    });
+    if (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(e.target.value)) {
+            document.getElementById("next_btn").classList.remove("disabled");
+    } else {
+      document.getElementById("next_btn").classList.add("disabled");
+    }
+      this.setState({
+        email: e.target.value,
+      });
   }
   handleService(e) {
+    if (this.state.service !== '') {
+      document.getElementById("next_btn").classList.remove("disabled");
+    } else {
+        document.getElementById("next_btn").classList.add("disabled");
+    }
     this.setState({
       service: e.target.value,
     });
@@ -177,6 +162,7 @@ class NewApptForm extends Component {
     });
   }
   handleTime(e) {
+    document.getElementById("next_btn").classList.remove("disabled");
     const currentButton = document.getElementById(`${e.target.id}`);
     document
       .querySelector(".form-time")
@@ -195,10 +181,11 @@ class NewApptForm extends Component {
 
   handleNext(e) {
     e.preventDefault();
-
+    document.getElementById("next_btn").classList.add("disabled");
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
     });
+
   }
 
   handleBack(e) {
@@ -229,7 +216,7 @@ class NewApptForm extends Component {
     return currentQuestion !== undefined ? (
       <div className="NewAppt__buttons">
         {backButton}
-        <button className="NewAppt__btn" onClick={(e) => this.handleNext(e)}>
+        <button className="NewAppt__btn disabled" id="next_btn" onClick={(e) => this.handleNext(e)} >
           Next
         </button>
       </div>
@@ -352,9 +339,6 @@ class NewApptForm extends Component {
   render() {
     return (
       <div className="NewApptForm">
-        {/* <header>
-          <h1 className="NewApptForm__title">Schedule an appointment</h1>
-        </header> */}
         <main className="NewApptForm__main">
           <form
             id="new-appointment"

@@ -1,4 +1,3 @@
-import ApptContext from "../contexts/ApptContext";
 import seedAppts from "../seedAppts.json";
 
 const ApptApiService = {
