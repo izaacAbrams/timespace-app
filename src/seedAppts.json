@@ -4,14 +4,14 @@
     "name": "Joe Smith",
     "email": "joesmith@google.com",
     "service": "Nails",
-    "schedule": "1",
+    "schedule": "sallys-salon-spa",
     "appt_date_time": "2020-05-08T16:00:00.000Z"
   },
   {
     "id": "2",
     "name": "Jane Smith",
     "email": "janesmith@microsoft.com",
-    "schedule": "1",
+    "schedule": "sallys-salon-spa",
     "service": "Salon",
     "appt_date_time": "2020-05-08T14:00:00.000Z"
   },
@@ -19,7 +19,7 @@
     "id": "3",
     "name": "Izaac A",
     "email": "izaaca@izaac.com",
-    "schedule": "2",
+    "schedule": "mikes-pokemon-training",
     "service": "training",
     "appt_date_time": "2020-05-08T18:00:00.000Z"
   }
