@@ -5,27 +5,20 @@ import "./Appointments.css";
 import ApptCard from "../../components/ApptCard/ApptCard";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import EditApptForm from "../../components/EditApptForm/EditApptForm";
-import ApptContext from "../../contexts/ApptContext";
-import ScheduleContext from "../../contexts/ScheduleContext";
+import TimespaceContext from "../../contexts/TimespaceContext";
+import ApptApiService from "../../services/appt-api-service";
 
 class Appointments extends Component {
-  static contextType = ApptContext;
+  static contextType = TimespaceContext;
   state = {
-    selected_date: moment().format(),
     currentId: "",
   };
-  findSchedule(scheduleContext) {
-    return scheduleContext.scheduleList.find(
-      (schedule) => schedule.schedule_url === this.props.match.params.url
-    );
-  }
 
-  filterAppts(filteredAppts) {
-    return filteredAppts.filter(
+  filterAppts() {
+    return this.context.apptList.filter(
       (appt) =>
-        appt.schedule === this.props.match.params.url &&
-        moment(appt.appt_date_time).format("L") ===
-          moment(this.state.selected_date).format("L")
+        moment(this.state.selected_date).format("YYYYMMDD") ===
+        moment(appt.appt_date_time).format("YYYYMMDD")
     );
   }
 
@@ -33,17 +26,15 @@ class Appointments extends Component {
     let dates = document.getElementsByClassName("date-card-container");
     for (let i = 0; i < dates.length; i++) {
       moment(dates[i].id).format("MMDD") === moment(date).format("MMDD")
-        ? dates[i].className += "selected"
+        ? (dates[i].className += "selected")
         : dates[i].classList.add("date-card-container");
     }
 
-    this.setState({
-      selected_date: date,
-    });
+    this.context.changeSelectedDate(date);
   }
 
   handleEdit(id) {
-    this.context.modal = true;
+    this.context.appt_modal = true;
     this.setState({ currentId: id });
     document.querySelector(".modal").style.display = "block";
   }
@@ -54,21 +45,26 @@ class Appointments extends Component {
       e.target === document.querySelector(".modal")
     ) {
       document.querySelector(".modal").style.display = "none";
-      this.props.history.push(`/schedules/${this.props.match.params.id}`);
-      this.context.modal = false;
+      this.context.appt_edit_modal = false;
     } else {
       document.querySelector(".modal").style.display = "block";
     }
   }
 
   handleDelete(id) {
-    this.context.apptList = this.context.apptList.filter((a) => a.id !== id);
-    this.props.history.push(`/schedules/${this.props.match.params.id}`);
+    this.context.deleteAppt(id);
+  }
+
+  componentDidMount() {
+    ApptApiService.getSchedule(this.props.match.params.url).then((schedule) => {
+      this.context.addCurrentSchedule(schedule);
+      this.context.addApptList(schedule.id);
+    });
   }
 
   renderAppts() {
-    const { apptList = [] } = this.context;
-    const filteredAppts = this.filterAppts(apptList);
+    const filteredAppts = this.filterAppts();
+    console.log(filteredAppts.map((appt) => appt.appt_date_time));
     filteredAppts.sort(
       (appt1, appt2) =>
         moment(appt1.appt_date_time).format("HHmm") -
@@ -77,11 +73,8 @@ class Appointments extends Component {
 
     return filteredAppts.map((appt) => (
       <ApptCard
-        name={appt.name}
         key={appt.id}
-        id={appt.id}
-        service={appt.service}
-        appt={appt.appt_date_time}
+        appt={appt}
         handleEdit={(id) => this.handleEdit(id)}
         handleDelete={(id) => this.handleDelete(id)}
       />
@@ -102,30 +95,26 @@ class Appointments extends Component {
       mainContent = this.renderAppts();
     }
     const renderEdit =
-      this.context.modal === true ? (
-        <EditApptForm id={this.state.currentId} {...this.props} />
+      this.context.appt_modal === true ? (
+        <EditApptForm id={this.state.currentId} />
       ) : (
         <React.Fragment />
       );
     return (
       <div className="Appointments">
         <section className="Appointments__date">
-          <ScheduleContext.Consumer>
-            {(scheduleContext) => (
-              <form id="view-schedule">
-                <h2>{this.findSchedule(scheduleContext).schedule}</h2>
-                <DatePicker
-                  handleDateSubmit={(date) => this.handleDateSubmit(date)}
-                  apptList={this.filterAppts(this.context.apptList)}
-                  selected={this.state.selected_date}
-                />
+          <form id="view-schedule">
+            <h2>{this.context.currentSchedule.schedule}</h2>
+            <DatePicker
+              handleDateSubmit={(date) => this.handleDateSubmit(date)}
+              apptList={this.filterAppts(this.context.apptList)}
+              selected={this.context.selected_date}
+            />
 
-                <Link to={`/${this.findSchedule(scheduleContext).schedule_url}/new-appt`}>
-                  New Appointment
-                </Link>
-              </form>
-            )}
-          </ScheduleContext.Consumer>
+            <Link to={`/${this.context.currentSchedule.schedule_url}/new-appt`}>
+              New Appointment
+            </Link>
+          </form>
         </section>
         <div className="modal" onClick={(e) => this.handleClose(e)}>
           <div className="display-modal">

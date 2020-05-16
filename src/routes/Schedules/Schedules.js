@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ScheduleContext from "../../contexts/ScheduleContext";
+import TimespaceContext from "../../contexts/TimespaceContext";
 import ScheduleList from "../../components/ScheduleList/ScheduleList";
 import EditScheduleForm from "../../components/EditScheduleForm/EditScheduleForm";
-import moment from "moment";
 import "./Schedules.css";
 
 class Schedules extends Component {
-  static contextType = ScheduleContext;
+  static contextType = TimespaceContext;
   state = {
     currentId: "",
   };
   handleEdit(id) {
-    this.context.modal = true;
+    this.context.schedule_modal = true;
     this.setState({ currentId: id });
     document.querySelector(".modal").style.display = "block";
   }
@@ -24,7 +23,7 @@ class Schedules extends Component {
     ) {
       document.querySelector(".modal").style.display = "none";
       this.props.history.push(`/schedules`);
-      this.context.modal = false;
+      this.context.schedule_modal = false;
     } else {
       document.querySelector(".modal").style.display = "block";
     }
@@ -35,17 +34,14 @@ class Schedules extends Component {
     );
     this.props.history.push("/schedules");
   }
-  renderHours() {
-    let scheduleHours = [];
-    for (let i = 100; i <= 2400; i += 100) {
-      scheduleHours.push(moment(i, "Hmm").format("h:mm a"));
-    }
-    return scheduleHours;
+
+  componentDidMount() {
+    this.context.addScheduleList(1);
   }
 
   render() {
     const renderEdit =
-      this.context.modal === true ? (
+      this.context.schedule_modal === true ? (
         <EditScheduleForm id={this.state.currentId} {...this.props.history} />
       ) : (
         <React.Fragment />
@@ -65,12 +61,9 @@ class Schedules extends Component {
         {this.context.scheduleList.map((schedule) => (
           <ScheduleList
             key={schedule.id}
-            id={schedule.id}
-            name={schedule.schedule}
-            url={schedule.schedule_url}
+            schedule={schedule}
             handleEdit={(e) => this.handleEdit(e)}
             handleDelete={(id) => this.handleDelete(id)}
-            {...this.props.history}
           />
         ))}
       </div>

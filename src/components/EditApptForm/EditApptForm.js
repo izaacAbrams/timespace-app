@@ -1,38 +1,37 @@
 import React, { Component } from "react";
 import moment from "moment";
-import ApptContext from "../../contexts/ApptContext";
-import ScheduleContext from "../../contexts/ScheduleContext";
+import TimespaceContext from "../../contexts/TimespaceContext";
 
 export default class EditApptForm extends Component {
-  static contextType = ApptContext;
+  static contextType = TimespaceContext;
   state = {
     name: "",
     email: "",
     appt_date: "",
     appt_date_time: "",
     service: "",
+    currentSchedule: null,
   };
 
-  handleSchedule(scheduleContext) {
-    return scheduleContext.find(
-      (schedule) => schedule.id === this.props.match.params.id
-    );
-  }
-
-  takenTimes(schedule) {
-    const currentSchedule = this.handleSchedule(schedule);
+  takenTimes() {
+    const currentSchedule = this.context.currentSchedule;
     return this.context.apptList
-      .filter((appt) => currentSchedule.id === appt.schedule)
+      .filter(
+        (appt) =>
+          currentSchedule.id === appt.schedule &&
+          moment(appt.appt_date_time).format("YYYYMMDD") ===
+            moment(this.context.selected_date).format("YYYYMMDD")
+      )
       .map((appt) => appt.appt_date_time);
   }
 
-  handleApptTimes(scheduleContext) {
-    let takenTimes = this.takenTimes(scheduleContext);
+  handleApptTimes() {
+    let takenTimes = this.takenTimes();
     let timeList = [];
 
     for (
-      let i = parseInt(this.handleSchedule(scheduleContext).time_open);
-      i <= parseInt(this.handleSchedule(scheduleContext).time_closed);
+      let i = parseInt(this.context.currentSchedule.time_open);
+      i <= parseInt(this.context.currentSchedule.time_closed);
       i += 100
     ) {
       timeList.push(moment(i, "hmm").format("HHmm"));
@@ -53,37 +52,36 @@ export default class EditApptForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const currentIndex = this.context.apptList.findIndex(
-      (appt) => appt.id === this.currentAppt().id
-    );
-    if (this.state.name === "") {
-      this.setState({
-        name: this.currentAppt().name,
-      });
-    }
-    if (this.state.email === "") {
-      this.setState({
-        emai: this.currentAppt().email,
-      });
-    }
-    if (this.state.appt_date_time === "") {
-      this.setState({
-        appt_date_time: this.currentAppt().appt_date_time,
-      });
-      if (this.state.service === "") {
-        this.setState({
-          service: this.currentAppt().service,
-        });
-      }
-    } else {
-      this.context.apptList[currentIndex] = {
-        ...this.context.apptList[currentIndex],
-        name: this.state.name,
-        email: this.state.email,
-        appt_date_time: this.state.appt_date_time,
-        service: this.state.service,
-      };
-    }
+    // const currentIndex = this.context.apptList.findIndex(
+    //   (appt) => appt.id === this.currentAppt().id
+    // );
+    // if (this.state.name === "") {
+    //   this.setState({
+    //     name: this.currentAppt().name,
+    //   });
+    // }
+    // if (this.state.email === "") {
+    //   this.setState({
+    //     emai: this.currentAppt().email,
+    //   });
+    // }
+    // if (this.state.appt_date_time === "") {
+    //   this.setState({
+    //     appt_date_time: this.currentAppt().appt_date_time,
+    //   });
+    //   if (this.state.service === "") {
+    //     this.setState({
+    //       service: this.currentAppt().service,
+    //     });
+    //   }
+    // } else {
+    //   const newAppt = {
+    //     name: this.state.name,
+    //     email: this.state.email,
+    //     appt_date_time: this.state.appt_date_time,
+    //     service: this.state.service,
+    //   };
+    // }
     this.props.history.push(`/schedules/${this.currentAppt().schedule}`);
     this.context.modal = false;
     document.querySelector(".modal").style.display = "none";
@@ -98,6 +96,9 @@ export default class EditApptForm extends Component {
         service: this.currentAppt().service,
       });
     }
+    this.setState({
+      currentSchedule: this.props.currentSchedule,
+    });
   }
 
   componentWillUnmount() {
@@ -154,19 +155,11 @@ export default class EditApptForm extends Component {
             name="hour_closed"
             required
           >
-            <ScheduleContext.Consumer>
-              {(scheduleContext) =>
-                this.handleApptTimes(scheduleContext.scheduleList).map(
-                  (time) => {
-                    return (
-                      <option key={time}>
-                        {moment(time, "hhmm").format("LT")}
-                      </option>
-                    );
-                  }
-                )
-              }
-            </ScheduleContext.Consumer>
+            {this.handleApptTimes().map((time) => {
+              return (
+                <option key={time}>{moment(time, "hhmm").format("LT")}</option>
+              );
+            })}
           </select>
         </div>
         <button type="submit" className="submit_btn" disabled={true}>

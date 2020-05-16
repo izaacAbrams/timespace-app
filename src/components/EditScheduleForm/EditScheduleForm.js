@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import moment from "moment";
-import ScheduleContext from "../../contexts/ScheduleContext";
+import TimespaceContext from "../../contexts/TimespaceContext";
 import ServiceForm from "../ServiceForm/ServiceForm";
 import "./EditScheduleForm.css";
 
 export default class EditScheduleForm extends Component {
-  static contextType = ScheduleContext;
+  static contextType = TimespaceContext;
   state = {
     schedule: "",
     time_open: "",

@@ -1,25 +1,13 @@
 import React, { Component } from "react";
-import seedAppt from "../seedAppts.json";
-import moment from "moment";
 
-export function createSeed() {
-  let todayApptSeed = [];
-  seedAppt.map((appt) => {
-    const apptTime = moment(appt.appt_date_time).format("HHmm");
-    return todayApptSeed.push({
-      ...appt,
-      appt_date_time: moment(apptTime, "HHmm").format(),
-    });
-  });
-  return todayApptSeed;
-}
 const ApptContext = React.createContext({
-  apptList: createSeed(),
+  apptList: [],
   error: null,
   modal: false,
   setError: () => {},
   clearError: () => {},
-  setAppt: () => {},
+  setAppts: () => {},
+  addAppts: () => {},
 });
 
 export default ApptContext;
@@ -39,10 +27,20 @@ export class ApptProvider extends Component {
     this.setState({ error: null });
   };
 
-  setAppt = (apptList) => {
+  setAppts = (apptList) => {
+    console.log(apptList);
     this.setState({ apptList });
   };
 
+  addAppts = (newAppts, cb) => {
+    this.setState(
+      {
+        ...this.state.apptList,
+        newAppts,
+      },
+      cb
+    );
+  };
   render() {
     const value = {
       apptList: this.state.apptList,
@@ -50,7 +48,8 @@ export class ApptProvider extends Component {
       modal: this.state.modal,
       setError: this.setError,
       clearError: this.setError,
-      setAppt: this.setAppt,
+      setAppts: this.setAppts,
+      addAppts: this.addAppts,
     };
     return (
       <ApptContext.Provider value={value}>

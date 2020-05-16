@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-import ScheduleContext from "../../contexts/ScheduleContext";
-import ApptContext from "../../contexts/ApptContext";
-import { v4 as uuidv4 } from "uuid";
+import TimespaceContext from "../../contexts/TimespaceContext";
+import ApptApiService from "../../services/appt-api-service";
 import moment from "moment";
 import "./NewApptForm.css";
 
 class NewApptForm extends Component {
-  static contextType = ApptContext;
+  static contextType = TimespaceContext;
 
   state = {
-    id: uuidv4(),
     appt_date: "",
     appt_date_time: moment().format(),
     name: "",
     email: "",
     service: "",
     notes: "",
-    schedule: this.props.match.params.name,
+    schedule: this.context.currentSchedule.id,
     currentQuestion: 0,
     questions: {
       name: "What is your name?",
@@ -32,7 +30,6 @@ class NewApptForm extends Component {
 
   handleSubmit(e) {
     const {
-      id,
       appt_date_time,
       name,
       email,
@@ -42,7 +39,6 @@ class NewApptForm extends Component {
     } = this.state;
     e.preventDefault();
     const newAppt = {
-      id,
       appt_date_time,
       name,
       email,
@@ -50,10 +46,9 @@ class NewApptForm extends Component {
       notes,
       schedule,
     };
-    this.context.apptList.push(newAppt);
+    this.context.addAppt(newAppt);
     this.setState({
       ...this.state,
-      id: uuidv4(),
       appt_date_time: moment().format(),
       name: "",
       email: "",
@@ -61,37 +56,29 @@ class NewApptForm extends Component {
       notes: "",
       schedule: this.props.match.params.name,
     });
-    this.props.history.push('/success')
+    this.props.history.push("/success");
   }
 
-  handleSchedule(scheduleContext) {
-    return scheduleContext.find(
-      (schedule) => schedule.schedule_url === this.props.match.params.name
-    );
-  }
-
-  takenTimes(schedule) {
-    const currentSchedule = this.handleSchedule(schedule);
-
-    return this.context.apptList
+  takenTimes() {
+    const currentSchedule = this.context;
+    return this.context.apptTimesList
       .filter(
-        (appt) =>
-          currentSchedule.id === appt.schedule &&
+        () =>
           moment(currentSchedule.appt_date_time).format("L") ===
-            moment(this.state.appt_date).format("L")
+          moment(this.state.appt_date).format("L")
       )
       .map((appt) => appt.appt_date_time);
   }
 
-  handleApptTimes(scheduleContext) {
-    let takenTimes = this.takenTimes(scheduleContext);
+  handleApptTimes() {
+    let takenTimes = this.takenTimes();
     let timeList = [];
-    let serviceDuration = this.handleSchedule(scheduleContext).services.find(
-      (service) => service.name === this.state.service
-    );
-    let i = parseInt(this.handleSchedule(scheduleContext).time_open);
+    let serviceDuration = JSON.parse(
+      this.context.currentSchedule.services
+    ).find((service) => service.name === this.state.service);
+    let i = parseInt(this.context.currentSchedule.time_open);
     timeList.push(moment(i, "Hmm").format("HHmm"));
-    while (i < parseInt(this.handleSchedule(scheduleContext).time_closed)) {
+    while (i < parseInt(this.context.currentSchedule.time_closed)) {
       i = moment(i, "Hmm")
         .add(((i * 3600 + serviceDuration.duration * 60) / 3600) % i, "hours")
         .format("HHmm");
@@ -107,8 +94,8 @@ class NewApptForm extends Component {
     return timeList;
   }
 
-  handleServices(scheduleContext) {
-    const services = this.handleSchedule(scheduleContext.scheduleList).services;
+  handleServices() {
+    const services = JSON.parse(this.context.currentSchedule.services);
     return typeof services === "string" ? (
       <option key={services}>{services}</option>
     ) : (
@@ -126,10 +113,11 @@ class NewApptForm extends Component {
   }
 
   handleName(e) {
+    console.log(this.context.currentSchedule.services);
     if (e.target.value.trim().length > 2) {
-      document.getElementById("next_btn").classList.remove('disabled');
+      document.getElementById("next_btn").classList.remove("disabled");
     } else {
-       document.getElementById("next_btn").classList.add("disabled");
+      document.getElementById("next_btn").classList.add("disabled");
     }
     this.setState({
       name: e.target.value,
@@ -137,20 +125,22 @@ class NewApptForm extends Component {
   }
 
   handleEmail(e) {
-    if (/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(e.target.value)) {
-            document.getElementById("next_btn").classList.remove("disabled");
+    if (
+      /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(e.target.value)
+    ) {
+      document.getElementById("next_btn").classList.remove("disabled");
     } else {
       document.getElementById("next_btn").classList.add("disabled");
     }
-      this.setState({
-        email: e.target.value,
-      });
+    this.setState({
+      email: e.target.value,
+    });
   }
   handleService(e) {
-    if (this.state.service !== '') {
+    if (this.state.service !== "") {
       document.getElementById("next_btn").classList.remove("disabled");
     } else {
-        document.getElementById("next_btn").classList.add("disabled");
+      document.getElementById("next_btn").classList.add("disabled");
     }
     this.setState({
       service: e.target.value,
@@ -173,7 +163,7 @@ class NewApptForm extends Component {
       `${this.state.appt_date} ${e.target.innerHTML}`,
       "YYYY-MM-DD HH:mm a"
     ).format();
-
+    console.log(apptTime);
     this.setState({
       appt_date_time: apptTime,
     });
@@ -185,14 +175,21 @@ class NewApptForm extends Component {
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
     });
-
   }
-
   handleBack(e) {
     e.preventDefault();
     this.setState({
       currentQuestion: this.state.currentQuestion - 1,
     });
+  }
+
+  componentDidMount() {
+    ApptApiService.getSchedule(this.props.match.params.name).then(
+      (schedule) => {
+        this.context.addCurrentSchedule(schedule);
+        this.context.addApptTimesList(schedule.id);
+      }
+    );
   }
   renderQuestions() {
     const questions = Object.values(this.state.questions);
@@ -216,7 +213,11 @@ class NewApptForm extends Component {
     return currentQuestion !== undefined ? (
       <div className="NewAppt__buttons">
         {backButton}
-        <button className="NewAppt__btn disabled" id="next_btn" onClick={(e) => this.handleNext(e)} >
+        <button
+          className="NewAppt__btn disabled"
+          id="next_btn"
+          onClick={(e) => this.handleNext(e)}
+        >
           Next
         </button>
       </div>
@@ -282,26 +283,20 @@ class NewApptForm extends Component {
         <div className="NewApptForm__section">
           <label htmlFor="schedule_time">Appointment time:</label>
           <div className="form-time" name="schedule_time" required>
-            <ScheduleContext.Consumer>
-              {(scheduleContext) =>
-                this.handleApptTimes(scheduleContext.scheduleList).map(
-                  (time) => {
-                    return (
-                      <div
-                        className="time-blocks"
-                        key={time}
-                        id={time}
-                        onClick={(e) => this.handleTime(e)}
-                      >
-                        <p key={time} id={time} className="time-list">
-                          {moment(time, "hhmm").format("LT")}
-                        </p>
-                      </div>
-                    );
-                  }
-                )
-              }
-            </ScheduleContext.Consumer>
+            {this.handleApptTimes().map((time) => {
+              return (
+                <div
+                  className="time-blocks"
+                  key={time}
+                  id={time}
+                  onClick={(e) => this.handleTime(e)}
+                >
+                  <p key={time} id={time} className="time-list">
+                    {moment(time, "hhmm").format("LT")}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       );
@@ -315,9 +310,7 @@ class NewApptForm extends Component {
             onClick={(e) => this.handleService(e)}
             required
           >
-            <ScheduleContext.Consumer>
-              {(scheduleContext) => this.handleServices(scheduleContext)}
-            </ScheduleContext.Consumer>
+            {this.handleServices()}
           </select>
         </div>
       );
@@ -345,13 +338,8 @@ class NewApptForm extends Component {
             onSubmit={(e) => this.handleSubmit(e)}
             className="NewApptForm__form"
           >
-            <ScheduleContext.Consumer>
-              {(scheduleContext) => (
-                <h1>
-                  {this.handleSchedule(scheduleContext.scheduleList).schedule}
-                </h1>
-              )}
-            </ScheduleContext.Consumer>
+            <h1>{this.context.currentSchedule.schedule}</h1>
+
             {this.renderQuestions()}
             {this.renderInputs()}
             {this.renderButtons()}

@@ -1,20 +1,24 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import TimespaceContext from "../../contexts/TimespaceContext";
 import "./ScheduleList.css";
 
 export default class ScheduleList extends Component {
-  handleScheduleClick() {
-    this.props.push("/schedules/" + this.props.url);
-  }
+  static contextType = TimespaceContext;
 
   render() {
     return (
       <div className="Schedules__section">
-        <h2 onClick={() => this.handleScheduleClick()}>{this.props.name}</h2>
+        <Link to={`/schedules/${this.props.schedule.schedule_url}`}>
+          {this.props.schedule.schedule}
+        </Link>
         <div className="Schedules__buttons">
-          <button onClick={() => this.props.handleEdit(this.props.id)}>
+          <button onClick={() => this.props.handleEdit(this.props.schedule.id)}>
             Edit
           </button>
-          <button onClick={() => this.props.handleDelete(this.props.id)}>
+          <button
+            onClick={() => this.props.handleDelete(this.props.schedule.id)}
+          >
             Delete
           </button>
         </div>
