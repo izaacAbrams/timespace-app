@@ -60,11 +60,10 @@ class NewApptForm extends Component {
   }
 
   takenTimes() {
-    const currentSchedule = this.context;
     return this.context.apptTimesList
       .filter(
         () =>
-          moment(currentSchedule.appt_date_time).format("L") ===
+          moment(this.context.selected_date.appt_date_time).format("L") ===
           moment(this.state.appt_date).format("L")
       )
       .map((appt) => appt.appt_date_time);
@@ -113,7 +112,6 @@ class NewApptForm extends Component {
   }
 
   handleName(e) {
-    console.log(this.context.currentSchedule.services);
     if (e.target.value.trim().length > 2) {
       document.getElementById("next_btn").classList.remove("disabled");
     } else {
@@ -163,7 +161,6 @@ class NewApptForm extends Component {
       `${this.state.appt_date} ${e.target.innerHTML}`,
       "YYYY-MM-DD HH:mm a"
     ).format();
-    console.log(apptTime);
     this.setState({
       appt_date_time: apptTime,
     });

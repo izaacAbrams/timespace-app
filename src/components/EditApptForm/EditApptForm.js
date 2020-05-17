@@ -6,21 +6,18 @@ export default class EditApptForm extends Component {
   static contextType = TimespaceContext;
   state = {
     name: "",
-    email: "",
     appt_date: "",
     appt_date_time: "",
     service: "",
-    currentSchedule: null,
+    error: null,
   };
 
   takenTimes() {
-    const currentSchedule = this.context.currentSchedule;
-    return this.context.apptList
+    return this.context.apptTimesList
       .filter(
-        (appt) =>
-          currentSchedule.id === appt.schedule &&
-          moment(appt.appt_date_time).format("YYYYMMDD") ===
-            moment(this.context.selected_date).format("YYYYMMDD")
+        () =>
+          moment(this.context.selected_date.appt_date_time).format("L") ===
+          moment(this.state.appt_date).format("L")
       )
       .map((appt) => appt.appt_date_time);
   }
@@ -28,13 +25,16 @@ export default class EditApptForm extends Component {
   handleApptTimes() {
     let takenTimes = this.takenTimes();
     let timeList = [];
-
-    for (
-      let i = parseInt(this.context.currentSchedule.time_open);
-      i <= parseInt(this.context.currentSchedule.time_closed);
-      i += 100
-    ) {
-      timeList.push(moment(i, "hmm").format("HHmm"));
+    let serviceDuration = JSON.parse(
+      this.context.currentSchedule.services
+    ).find((service) => service.name === this.currentAppt().service);
+    let i = parseInt(this.context.currentSchedule.time_open);
+    timeList.push(moment(i, "Hmm").format("HHmm"));
+    while (i < parseInt(this.context.currentSchedule.time_closed)) {
+      i = moment(i, "Hmm")
+        .add(((i * 3600 + serviceDuration.duration * 60) / 3600) % i, "hours")
+        .format("HHmm");
+      timeList.push(i);
     }
 
     takenTimes.map(
@@ -52,37 +52,58 @@ export default class EditApptForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
     // const currentIndex = this.context.apptList.findIndex(
     //   (appt) => appt.id === this.currentAppt().id
     // );
-    // if (this.state.name === "") {
-    //   this.setState({
-    //     name: this.currentAppt().name,
+    if (this.state.name === "") {
+      this.setState({
+        name: this.currentAppt().name,
+      });
+    }
+    if (this.state.email === "") {
+      this.setState({
+        emai: this.currentAppt().email,
+      });
+    }
+    if (this.state.appt_date_time === "") {
+      this.setState({
+        appt_date_time: this.currentAppt().appt_date_time,
+      });
+      if (this.state.service === "") {
+        this.setState({
+          service: this.currentAppt().service,
+        });
+      }
+    } else {
+      const newAppt = {
+        id: this.currentAppt().id,
+        name: this.state.name,
+        email: this.currentAppt().email,
+        appt_date_time: this.state.appt_date_time,
+        service: this.state.service,
+        schedule: this.currentAppt().schedule,
+      };
+      this.context.patchAppt(this.currentAppt().id, newAppt);
+    }
+    // this.props.history.push(`/appointments/${this.currentAppt().schedule}`);
+    // this.context.patchAppt()
+    // const newAppt = {
+    //   name: this.state.name,
+    //   appt_date_time: this.state.appt_date_time,
+    //   service: this.state.service,
+    // };
+    // let values;
+    // for (values in this.state) {
+    //   if (this.state[values]) {
+    //     Object.keys(this.state).map((key) => {
+    //       if (this.state[key] === this.state[values]) {
+    //         const newAppt = { key: this.state[values] };
+    // this.context.patchAppt(this.currentAppt().id, newAppt);
+    //     }
     //   });
-    // }
-    // if (this.state.email === "") {
-    //   this.setState({
-    //     emai: this.currentAppt().email,
-    //   });
-    // }
-    // if (this.state.appt_date_time === "") {
-    //   this.setState({
-    //     appt_date_time: this.currentAppt().appt_date_time,
-    //   });
-    //   if (this.state.service === "") {
-    //     this.setState({
-    //       service: this.currentAppt().service,
-    //     });
     //   }
-    // } else {
-    //   const newAppt = {
-    //     name: this.state.name,
-    //     email: this.state.email,
-    //     appt_date_time: this.state.appt_date_time,
-    //     service: this.state.service,
-    //   };
     // }
-    this.props.history.push(`/schedules/${this.currentAppt().schedule}`);
     this.context.modal = false;
     document.querySelector(".modal").style.display = "none";
   }
@@ -91,20 +112,15 @@ export default class EditApptForm extends Component {
     if (this.currentAppt() !== undefined) {
       this.setState({
         name: this.currentAppt().name,
-        email: this.currentAppt().email,
         appt_date_time: this.currentAppt().appt_date_time,
         service: this.currentAppt().service,
       });
     }
-    this.setState({
-      currentSchedule: this.props.currentSchedule,
-    });
   }
 
   componentWillUnmount() {
     this.setState({
       name: "",
-      email: "",
       appt_date_time: "",
       service: "",
     });
@@ -125,15 +141,30 @@ export default class EditApptForm extends Component {
       `${this.state.appt_date} ${e.target.value}`,
       "YYYY-MM-DD H:mm P"
     ).format();
-    console.log(this.state.appt_date, e.target.value);
     this.setState({
       appt_date_time: moment(
         `${this.state.appt_date} ${e.target.value}`,
         "YYYY-MM-DD H:mm P"
       ).format(),
     });
+    this.state.appt_date_time === "Invalid date"
+      ? this.setState({
+          error: "Please select valid date and time",
+        })
+      : this.setState({ error: null });
   }
+  handleServices(e) {
+    this.setState({
+      service: e.target.value,
+    });
+  }
+
   render() {
+    const renderError = this.state.error ? (
+      <p>{this.state.error}</p>
+    ) : (
+      <React.Fragment />
+    );
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
         <h3>Edit Appointment</h3>
@@ -144,16 +175,29 @@ export default class EditApptForm extends Component {
           name="appt_name"
         />
         <div className="EditAppt__section">
+          <label htmlFor="service">Service:</label>
+          <select
+            className="EditAppt__services"
+            onChange={(e) => this.handleServices(e)}
+            name="service"
+          >
+            {JSON.parse(this.context.currentSchedule.services).map(
+              (service) => {
+                return <option key={service.name}>{service.name}</option>;
+              }
+            )}
+          </select>
+        </div>
+        <div className="EditAppt__section">
           <label htmlFor="date">Date:</label>
           <input type="date" onChange={(e) => this.handleDate(e)} name="date" />
         </div>
         <div className="EditAppt__section">
-          <label htmlFor="hour_open">Time:</label>
+          <label htmlFor="time">Time:</label>
           <select
             className="EditAppt__hours"
-            onClick={(e) => this.handleTime(e)}
-            name="hour_closed"
-            required
+            onChange={(e) => this.handleTime(e)}
+            name="time"
           >
             {this.handleApptTimes().map((time) => {
               return (
@@ -162,6 +206,7 @@ export default class EditApptForm extends Component {
             })}
           </select>
         </div>
+        {renderError}
         <button type="submit" className="submit_btn" disabled={true}>
           Submit
         </button>

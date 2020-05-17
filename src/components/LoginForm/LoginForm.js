@@ -1,46 +1,42 @@
 import React, { Component } from "react";
-import TokenService from "../../services/token-service";
+import AuthApiService from "../../services/auth-api-service";
 import "./LoginForm.css";
 
 class LoginForm extends Component {
   state = {
-    userName: "",
+    email: "",
     password: "",
   };
 
-  handleSubmit(e) {
+  handleSubmitJwtAuth = (e) => {
     e.preventDefault();
-    const { user_name, password } = e.target;
+    this.setState({ error: null });
+    const { email, password } = e.target;
 
-    this.setState({
-      userName: user_name.value,
+    AuthApiService.postLogin({
+      email: email.value,
       password: password.value,
-    });
-    TokenService.saveAuthToken(
-      TokenService.makeBasicAuthToken(user_name, password)
-    );
-    this.handleLoginSuccess();
-  }
-
-  handleLoginSuccess = () => {
-    const { location, history } = this.props;
-    const destination = (location.state || {}).from || "/schedules";
-    history.push(destination);
+    })
+      .then((res) => {
+        email.value = "";
+        password.value = "";
+        this.props.onLoginSuccess();
+      })
+      .catch((res) => {
+        this.setState({ error: res.error });
+      });
   };
   render() {
     return (
       <div className="LoginForm">
-        <header>
-          <h1>Login</h1>
-        </header>
         <section className="LoginForm__main_section">
-          <form id="login" onSubmit={(e) => this.handleSubmit(e)}>
+          <form id="login" onSubmit={this.handleSubmitJwtAuth}>
             <div className="LoginForm__section">
-              <label htmlFor="user_name">User Name:</label>
+              <label htmlFor="email">Email:</label>
               <input
                 type="text"
-                className="LoginForm__user_name"
-                name="user_name"
+                className="LoginForm__email"
+                name="email"
                 required
               />
             </div>

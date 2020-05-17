@@ -17,7 +17,7 @@ class Appointments extends Component {
   filterAppts() {
     return this.context.apptList.filter(
       (appt) =>
-        moment(this.state.selected_date).format("YYYYMMDD") ===
+        moment(this.context.selected_date).format("YYYYMMDD") ===
         moment(appt.appt_date_time).format("YYYYMMDD")
     );
   }
@@ -64,7 +64,6 @@ class Appointments extends Component {
 
   renderAppts() {
     const filteredAppts = this.filterAppts();
-    console.log(filteredAppts.map((appt) => appt.appt_date_time));
     filteredAppts.sort(
       (appt1, appt2) =>
         moment(appt1.appt_date_time).format("HHmm") -
@@ -73,7 +72,7 @@ class Appointments extends Component {
 
     return filteredAppts.map((appt) => (
       <ApptCard
-        key={appt.id}
+        key={appt.name + appt.id}
         appt={appt}
         handleEdit={(id) => this.handleEdit(id)}
         handleDelete={(id) => this.handleDelete(id)}

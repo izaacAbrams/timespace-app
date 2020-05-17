@@ -6,7 +6,7 @@ import LandingPage from "../../routes/LandingPage/LandingPage";
 import SignUpForm from "../SignUpForm/SignUpForm";
 import NewApptForm from "../NewApptForm/NewApptForm";
 import Appointments from "../../routes/Appointments/Appointments";
-import LoginForm from "../LoginForm/LoginForm";
+import LoginPage from "../../routes/LoginPage/LoginPage";
 import NewScheduleForm from "../../routes/NewScheduleForm/NewScheduleForm";
 import Schedules from "../../routes/Schedules/Schedules";
 import ApptApiService from "../../services/appt-api-service";
@@ -49,7 +49,7 @@ class App extends Component {
       ApptApiService.getAppts(scheduleId).then((appt) => {
         const apptTimesList = appt.map((appt) => {
           return {
-            appt_date_time: moment(appt.appt_date_time, "HHmm").format(),
+            appt_date_time: moment(appt.appt_date_time).format(),
           };
         });
         this.setState({ apptTimesList });
@@ -61,17 +61,16 @@ class App extends Component {
     deleteAppt: (apptId) => {
       ApptApiService.deleteAppt(apptId);
       this.setState({
-        apptList: this.state.apptList.filter((appt) => apptId === appt.id),
+        apptList: this.state.apptList.filter((appt) => apptId !== appt.id),
       });
     },
     patchAppt: (apptId, updatedAppt) => {
-      console.log(updatedAppt);
       ApptApiService.patchAppt(apptId, updatedAppt);
-      const newAppt = this.state.apptList
-        .filter((appt) => appt.id === apptId)
-        .push(updatedAppt);
+      const updatedApptList = this.state.apptList.map((appt) => {
+        return appt.id === apptId ? updatedAppt : appt;
+      });
       this.setState({
-        apptList: newAppt,
+        apptList: updatedApptList,
       });
     },
     addCurrentSchedule: (currentSchedule) => {
@@ -92,7 +91,7 @@ class App extends Component {
             <Switch>
               <Route exact path={"/"} component={LandingPage} />
               <Route path={"/signup"} component={SignUpForm} />
-              <Route path={"/login"} component={LoginForm} />
+              <Route path={"/login"} component={LoginPage} />
               <Route path={"/:name/new-appt"} component={NewApptForm} />
               <PrivateRoute path={"/schedules/:url"} component={Appointments} />
               <PrivateRoute
