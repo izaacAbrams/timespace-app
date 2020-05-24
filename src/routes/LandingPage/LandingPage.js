@@ -18,8 +18,8 @@ export default function LandingPage() {
         worry, its easy to create a new appointment or edit an existing one!
       </p>
       <p>
-        To demo from the user side, try the demo user: demo with password:
-        demopassword
+        To demo from the user side, try the demo user: demo@account.com with
+        password: demopassword
       </p>
       <div className="LandingPage__btn_wrapper">
         <Link to="/signup" className="LandingPage__button">

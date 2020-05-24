@@ -23,7 +23,6 @@ const ScheduleApiService = {
     });
   },
   postSchedule(schedule) {
-    console.log(schedule);
     return fetch(`${config.API_ENDPOINT}/schedules/`, {
       method: "POST",
       headers: {
