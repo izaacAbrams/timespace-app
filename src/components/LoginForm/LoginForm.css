@@ -21,3 +21,8 @@
   font-size: 16px;
   color: red;
 }
+
+.LoginForm__email,
+.LoginForm__password {
+  font-size: 18px;
+}
