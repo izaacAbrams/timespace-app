@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import moment from "moment";
+import "./ApptCard.css";
 
 export default class ApptCard extends Component {
   render() {
@@ -9,6 +10,13 @@ export default class ApptCard extends Component {
         <h3>{this.props.appt.name}</h3>
         <p>Service: {this.props.appt.service}</p>
         <p>Time: {apptTime}</p>
+        {this.props.appt.notes ? (
+          <p className="Appointments__notes">
+            Comment: {this.props.appt.notes}
+          </p>
+        ) : (
+          <></>
+        )}
         <button onClick={() => this.props.handleEdit(this.props.appt.id)}>
           Edit
         </button>
