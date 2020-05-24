@@ -1,3 +1,18 @@
 .selected {
   background-color: darkgrey;
 }
+
+.date-card-date {
+  font-size: 22px;
+}
+@media screen and (max-width: 510px) {
+  .date-card-date {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .date-card-date {
+    font-size: 14px;
+  }
+}
