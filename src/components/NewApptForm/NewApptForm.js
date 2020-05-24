@@ -14,7 +14,6 @@ class NewApptForm extends Component {
     email: "",
     service: "",
     notes: "",
-    schedule: this.context.currentSchedule.id,
     currentQuestion: 0,
     questions: {
       name: "What is your name?",
@@ -29,14 +28,7 @@ class NewApptForm extends Component {
   };
 
   handleSubmit(e) {
-    const {
-      appt_date_time,
-      name,
-      email,
-      service,
-      notes,
-      schedule,
-    } = this.state;
+    const { appt_date_time, name, email, service, notes } = this.state;
     e.preventDefault();
     const newAppt = {
       appt_date_time,
@@ -44,7 +36,7 @@ class NewApptForm extends Component {
       email,
       service,
       notes,
-      schedule,
+      schedule: this.context.currentSchedule.id,
     };
     this.context.addAppt(newAppt);
     this.setState({
@@ -72,9 +64,9 @@ class NewApptForm extends Component {
   handleApptTimes() {
     let takenTimes = this.takenTimes();
     let timeList = [];
-    let serviceDuration = JSON.parse(
-      this.context.currentSchedule.services
-    ).find((service) => service.name === this.state.service);
+    let serviceDuration = this.context.currentSchedule.services.find(
+      (service) => service.name === this.state.service
+    );
     let i = parseInt(this.context.currentSchedule.time_open);
     timeList.push(moment(i, "Hmm").format("HHmm"));
     while (i < parseInt(this.context.currentSchedule.time_closed)) {
@@ -94,7 +86,7 @@ class NewApptForm extends Component {
   }
 
   handleServices() {
-    const services = JSON.parse(this.context.currentSchedule.services);
+    const services = this.context.currentSchedule.services;
     return typeof services === "string" ? (
       <option key={services}>{services}</option>
     ) : (
@@ -181,7 +173,7 @@ class NewApptForm extends Component {
   }
 
   componentDidMount() {
-    ApptApiService.getSchedule(this.props.match.params.name).then(
+    ApptApiService.getScheduleId(this.props.match.params.name).then(
       (schedule) => {
         this.context.addCurrentSchedule(schedule);
         this.context.addApptTimesList(schedule.id);

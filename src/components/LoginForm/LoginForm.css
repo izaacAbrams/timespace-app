@@ -16,3 +16,8 @@
 .LoginForm__section {
   padding: 5px;
 }
+
+.red {
+  font-size: 16px;
+  color: red;
+}

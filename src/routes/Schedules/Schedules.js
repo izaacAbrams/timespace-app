@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TimespaceContext from "../../contexts/TimespaceContext";
+import TokenService from "../../services/token-service";
 import ScheduleList from "../../components/ScheduleList/ScheduleList";
 import EditScheduleForm from "../../components/EditScheduleForm/EditScheduleForm";
 import "./Schedules.css";
@@ -29,14 +30,11 @@ class Schedules extends Component {
     }
   }
   handleDelete(id) {
-    this.context.scheduleList = this.context.scheduleList.filter(
-      (s) => s.id !== id
-    );
-    this.props.history.push("/schedules");
+    this.context.deleteSchedule(id);
   }
 
   componentDidMount() {
-    this.context.addScheduleList(1);
+    this.context.addScheduleList(TokenService.readJwtToken().user_id);
   }
 
   render() {
@@ -60,7 +58,7 @@ class Schedules extends Component {
         </div>
         {this.context.scheduleList.map((schedule) => (
           <ScheduleList
-            key={schedule.id}
+            key={schedule.schedule + schedule.id}
             schedule={schedule}
             handleEdit={(e) => this.handleEdit(e)}
             handleDelete={(id) => this.handleDelete(id)}

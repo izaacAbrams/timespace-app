@@ -25,9 +25,9 @@ export default class EditApptForm extends Component {
   handleApptTimes() {
     let takenTimes = this.takenTimes();
     let timeList = [];
-    let serviceDuration = JSON.parse(
-      this.context.currentSchedule.services
-    ).find((service) => service.name === this.currentAppt().service);
+    let serviceDuration = this.context.currentSchedule.services.find(
+      (service) => service.name === this.currentAppt().service
+    );
     let i = parseInt(this.context.currentSchedule.time_open);
     timeList.push(moment(i, "Hmm").format("HHmm"));
     while (i < parseInt(this.context.currentSchedule.time_closed)) {
@@ -53,9 +53,6 @@ export default class EditApptForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    // const currentIndex = this.context.apptList.findIndex(
-    //   (appt) => appt.id === this.currentAppt().id
-    // );
     if (this.state.name === "") {
       this.setState({
         name: this.currentAppt().name,
@@ -86,24 +83,6 @@ export default class EditApptForm extends Component {
       };
       this.context.patchAppt(this.currentAppt().id, newAppt);
     }
-    // this.props.history.push(`/appointments/${this.currentAppt().schedule}`);
-    // this.context.patchAppt()
-    // const newAppt = {
-    //   name: this.state.name,
-    //   appt_date_time: this.state.appt_date_time,
-    //   service: this.state.service,
-    // };
-    // let values;
-    // for (values in this.state) {
-    //   if (this.state[values]) {
-    //     Object.keys(this.state).map((key) => {
-    //       if (this.state[key] === this.state[values]) {
-    //         const newAppt = { key: this.state[values] };
-    // this.context.patchAppt(this.currentAppt().id, newAppt);
-    //     }
-    //   });
-    //   }
-    // }
     this.context.modal = false;
     document.querySelector(".modal").style.display = "none";
   }
@@ -181,11 +160,9 @@ export default class EditApptForm extends Component {
             onChange={(e) => this.handleServices(e)}
             name="service"
           >
-            {JSON.parse(this.context.currentSchedule.services).map(
-              (service) => {
-                return <option key={service.name}>{service.name}</option>;
-              }
-            )}
+            {this.context.currentSchedule.services.map((service) => {
+              return <option key={service.name}>{service.name}</option>;
+            })}
           </select>
         </div>
         <div className="EditAppt__section">

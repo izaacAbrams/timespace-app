@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import AuthApiService from "../../services/auth-api-service";
+import TimespaceContext from "../../contexts/TimespaceContext";
 import "./LoginForm.css";
 
 class LoginForm extends Component {
+  static contextType = TimespaceContext;
+
   state = {
     email: "",
     password: "",
+    error: null,
   };
 
   handleSubmitJwtAuth = (e) => {
@@ -20,6 +24,7 @@ class LoginForm extends Component {
       .then((res) => {
         email.value = "";
         password.value = "";
+        this.context.updateSignedIn(true);
         this.props.onLoginSuccess();
       })
       .catch((res) => {
@@ -27,10 +32,12 @@ class LoginForm extends Component {
       });
   };
   render() {
+    const { error } = this.state;
     return (
       <div className="LoginForm">
         <section className="LoginForm__main_section">
           <form id="login" onSubmit={this.handleSubmitJwtAuth}>
+            <div role="alert">{error && <p className="red">{error}</p>}</div>
             <div className="LoginForm__section">
               <label htmlFor="email">Email:</label>
               <input

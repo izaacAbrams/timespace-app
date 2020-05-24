@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { v4 as uuidv4 } from "uuid";
 import ServiceForm from "../../components/ServiceForm/ServiceForm";
-import ScheduleContext from "../../contexts/ScheduleContext";
+import TimespaceContext from "../../contexts/TimespaceContext";
+import TokenService from "../../services/token-service";
 import "./NewScheduleForm.css";
 
 class NewScheduleForm extends Component {
-  static contextType = ScheduleContext;
+  static contextType = TimespaceContext;
   state = {
-    id: uuidv4(),
     schedule: "",
+    schedule_url: "",
     time_open: "100",
     time_closed: "2300",
     services: [],
@@ -17,9 +17,22 @@ class NewScheduleForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.context.scheduleList.push({
-      ...this.state,
-    });
+    const {
+      schedule,
+      time_open,
+      time_closed,
+      schedule_url,
+      services,
+    } = this.state;
+    const newSchedule = {
+      schedule,
+      time_open,
+      time_closed,
+      schedule_url,
+      services: JSON.stringify(services),
+      user_id: TokenService.readJwtToken().user_id,
+    };
+    this.context.addSchedule(newSchedule);
     this.props.history.push("/schedules");
   }
   renderHours() {

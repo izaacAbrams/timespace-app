@@ -1,28 +1,48 @@
 import config from "../config";
+import TokenService from "./token-service";
 
 const ScheduleApiService = {
   getSchedules(user) {
     return fetch(`${config.API_ENDPOINT}/schedules/user/${user}`, {
       method: "GET",
       headers: {
-        Authorization: "Bearer fd78e65a-123c-4521-bdd2-d286eb1b8b6d",
+        authorization: `Bearer ${TokenService.getAuthToken()}`,
       },
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
-  postSchedule(schedule) {
-    return (fetch(`${config.API_ENDPOINT}/schedules`),
-    {
-      method: "POST",
+  patchSchedule(scheduleId, updatedSchedule) {
+    return fetch(`${config.API_ENDPOINT}/schedules/${scheduleId}`, {
+      method: "PATCH",
       headers: {
-        Authorization: "Bearer fd78e65a-123c-4521-bdd2-d286eb1b8b6d",
+        authorization: `Bearer ${TokenService.getAuthToken()}`,
         "content-type": "application/json",
       },
+      body: JSON.stringify(updatedSchedule),
+    });
+  },
+  postSchedule(schedule) {
+    console.log(schedule);
+    return fetch(`${config.API_ENDPOINT}/schedules/`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+
       body: JSON.stringify(schedule),
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
+  },
+  deleteSchedule(scheduleId) {
+    return fetch(`${config.API_ENDPOINT}/schedules/${scheduleId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${TokenService.getAuthToken()}`,
+      },
+    });
   },
 };
 

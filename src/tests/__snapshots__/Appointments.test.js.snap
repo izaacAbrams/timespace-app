@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`appointments route renders UI as expected 1`] = `
+<div
+  className="App"
+>
+  <header
+    className="App__header"
+  >
+    <nav
+      className="Nav"
+    >
+      <a
+        className="Nav__section"
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+      <a
+        className="Nav__section"
+        href="/schedules"
+        onClick={[Function]}
+      >
+        Schedules
+      </a>
+      <div
+        className="Header__not-logged-in"
+      >
+        <div
+          className="Nav__section"
+        >
+          <a
+            className="register"
+            href="/signup"
+            onClick={[Function]}
+          >
+            Register
+          </a>
+          <a
+            className="login"
+            href="/login"
+            onClick={[Function]}
+          >
+            Log in
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main
+    className="App__main"
+  >
+    <div
+      className="LandingPage"
+    >
+      <h1
+        className="LandingPage__title"
+      >
+        TimeSpaces
+      </h1>
+      <p
+        className="LandingPage__desc"
+      >
+        TimeSpaces is the ideal tool for small business needs. It is easy to set up and takes all the work out of putting together your schedule! 
+        <br />
+        <br />
+        When you sign up for an account, you will have access to creating your own custom schedules, each with a unique URL to share to anyone wanting to schedule an appointment. 
+        <br />
+        <br />
+        In the case you just want to manually enter in an appointment, not to worry, its easy to create a new appointment or edit an existing one!
+      </p>
+      <div
+        className="LandingPage__btn_wrapper"
+      >
+        <a
+          className="LandingPage__button"
+          href="/signup"
+          onClick={[Function]}
+        >
+          Get Started
+        </a>
+        <a
+          className="LandingPage__button"
+          href="/sallys-salon-spa/new-appt"
+          onClick={[Function]}
+        >
+          Demo New Appointment
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+`;

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`apptcard component renders the UI as expected 1`] = `
+<div
+  className="Appointments__main_appt"
+>
+  <h3>
+    Test Appt
+  </h3>
+  <p>
+    Service: 
+    Test
+  </p>
+  <p>
+    Time: 
+    10:28 AM
+  </p>
+  <button
+    onClick={[Function]}
+  >
+    Edit
+  </button>
+  <button
+    onClick={[Function]}
+  >
+    Delete
+  </button>
+</div>
+`;

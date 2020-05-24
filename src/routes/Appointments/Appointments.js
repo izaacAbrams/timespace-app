@@ -56,10 +56,12 @@ class Appointments extends Component {
   }
 
   componentDidMount() {
-    ApptApiService.getSchedule(this.props.match.params.url).then((schedule) => {
-      this.context.addCurrentSchedule(schedule);
-      this.context.addApptList(schedule.id);
-    });
+    ApptApiService.getScheduleId(this.props.match.params.url).then(
+      (schedule) => {
+        this.context.addCurrentSchedule(schedule);
+        this.context.addApptList(schedule.id);
+      }
+    );
   }
 
   renderAppts() {
