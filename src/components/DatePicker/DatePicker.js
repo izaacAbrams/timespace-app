@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import moment from "moment";
+import TimespaceContext from "../../contexts/TimespaceContext";
 import "./DatePicker.css";
+
 export default class DatePicker extends Component {
+  static contextType = TimespaceContext;
+
   state = {
     currentWeek: 0,
   };
@@ -36,9 +40,16 @@ export default class DatePicker extends Component {
       currentWeek: this.state.currentWeek + 1,
     });
   }
+  handleApptNotfications(date) {
+    return this.context.apptList.find(
+      (appt) =>
+        moment(appt.appt_date_time).format("MMDD") ===
+        moment(date).format("MMDD")
+    );
+  }
   render() {
     return (
-      <div className="form-section">
+      <div className="form-section date-picker-container">
         <button onClick={(e) => this.handlePrevious(e)}>Back</button>
         {this.handleDateCards().map((date) => {
           return (
@@ -57,6 +68,12 @@ export default class DatePicker extends Component {
                 <span className="date-card-date">
                   {moment(date).format("M/DD")}
                 </span>
+
+                {this.handleApptNotfications(date) ? (
+                  <span className="date-card-bullet">&bull;</span>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           );

@@ -68,12 +68,10 @@
 
 .date-card-wrapper {
   padding: 15px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .date-card-date {
   font-size: 22px;
-}
-
-.selected {
-  background-color: darkgray;
 }

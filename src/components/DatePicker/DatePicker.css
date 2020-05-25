@@ -1,10 +1,22 @@
 .selected {
   background-color: darkgrey;
+  color: black;
 }
 
 .date-card-date {
   font-size: 22px;
 }
+
+.date-picker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date-card-bullet {
+  font-size: 22px;
+}
+
 @media screen and (max-width: 510px) {
   .date-card-date {
     font-size: 18px;
