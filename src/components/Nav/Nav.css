@@ -1,17 +1,26 @@
 .Nav__section {
   text-align: center;
+  color: #edf2f4;
+  font-family: "Fjalla One", sans-serif;
+  text-decoration: none;
 }
 
 .Nav {
   display: flex;
-  justify-content: space-evenly;
+  background-color: #161925;
+  justify-content: space-between;
+
   padding: 20px;
 }
 
 .register {
   padding: 0 10px;
+  color: #edf2f4;
+  text-decoration: none;
 }
 
 .login {
   padding: 0 10px;
+  color: #edf2f4;
+  text-decoration: none;
 }
