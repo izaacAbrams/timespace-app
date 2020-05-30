@@ -35,7 +35,7 @@ TimeSpace is a scheduling app for small businesses. Easily create custom schedul
 
 ## Screenshots
 
-![Landing Page](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LandingPage.PNG)
+![Landing Page](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LandingPage.PNG =948x470)
 
 The landing page, where you can demo creating a new appointment, or sign up.
 
