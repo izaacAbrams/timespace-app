@@ -29,7 +29,7 @@ class SignUpForm extends Component {
     const { error } = this.state;
     return (
       <div className="SignUpForm">
-        <h2 className="SignUpForm__title">Sign Up Form</h2>
+        <h2 className="SignUpForm__title">Sign Up</h2>
         <main className="SignUpForm__main">
           <form
             className="SignUpForm__form"
