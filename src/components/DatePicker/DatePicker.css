@@ -3,6 +3,10 @@
   color: #161925;
 }
 
+.selected > .date-card-wrapper > img {
+  filter: none;
+}
+
 .date-card-date {
   font-size: 22px;
 }
@@ -14,7 +18,11 @@
 }
 
 .date-card-bullet {
-  font-size: 20px;
+  height: 7px;
+  width: 7px;
+  margin: auto;
+  margin-top: 5px;
+  filter: brightness(90);
 }
 
 .DatePicker__arrows {

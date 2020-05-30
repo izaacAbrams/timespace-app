@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import TimespaceContext from "../../contexts/TimespaceContext";
+import "./EditApptForm.css";
 
 export default class EditApptForm extends Component {
   static contextType = TimespaceContext;
@@ -146,17 +147,22 @@ export default class EditApptForm extends Component {
     );
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
-        <h3>Edit Appointment</h3>
-        <label htmlFor="appt_name">Name:</label>
+        <h3 className="EditApptForm__title">Edit Appointment</h3>
+        <label className="input_label EditApptForm__label" htmlFor="appt_name">
+          Name:
+        </label>
         <input
           type="text"
           onChange={(e) => this.handleName(e)}
+          className="EditApptForm__input"
           name="appt_name"
         />
         <div className="EditAppt__section">
-          <label htmlFor="service">Service:</label>
+          <label className="input_label EditApptForm__label" htmlFor="service">
+            Service:
+          </label>
           <select
-            className="EditAppt__services"
+            className="EditApptForm__input"
             onChange={(e) => this.handleServices(e)}
             name="service"
           >
@@ -166,13 +172,22 @@ export default class EditApptForm extends Component {
           </select>
         </div>
         <div className="EditAppt__section">
-          <label htmlFor="date">Date:</label>
-          <input type="date" onChange={(e) => this.handleDate(e)} name="date" />
+          <label className="input_label EditApptForm__label" htmlFor="date">
+            Date:
+          </label>
+          <input
+            type="date"
+            className="EditApptForm__input"
+            onChange={(e) => this.handleDate(e)}
+            name="date"
+          />
         </div>
         <div className="EditAppt__section">
-          <label htmlFor="time">Time:</label>
+          <label className="input_label EditApptForm__label" htmlFor="time">
+            Time:
+          </label>
           <select
-            className="EditAppt__hours"
+            className="EditApptForm__input"
             onChange={(e) => this.handleTime(e)}
             name="time"
           >

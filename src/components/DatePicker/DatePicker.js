@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import TimespaceContext from "../../contexts/TimespaceContext";
+import dot from "../../images/dot.png";
 import "./DatePicker.css";
 
 export default class DatePicker extends Component {
@@ -75,7 +76,7 @@ export default class DatePicker extends Component {
                 </span>
 
                 {this.handleApptNotfications(date) ? (
-                  <span className="date-card-bullet">&bull;</span>
+                  <img src={dot} className="date-card-bullet" alt="" />
                 ) : (
                   <></>
                 )}

@@ -196,12 +196,12 @@ class NewApptForm extends Component {
     ];
     const backButton =
       this.state.currentQuestion !== 0 ? (
-        <button
-          className="NewApptForm__btn"
+        <div
+          className="NewApptForm__btn back"
           onClick={(e) => this.handleBack(e)}
         >
           Back
-        </button>
+        </div>
       ) : (
         <React.Fragment />
       );

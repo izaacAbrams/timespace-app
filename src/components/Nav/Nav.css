@@ -6,9 +6,14 @@
 
 .Nav {
   display: flex;
-  background-color: #161925;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  background-color: #161925;
+  padding: 10px;
+}
+
+.Nav__logo {
+  display: contents;
 }
 
 .register,
@@ -25,4 +30,17 @@
 .Nav_underline:hover {
   text-decoration: underline;
   text-decoration-color: #cf5de3;
+}
+
+.logo {
+  height: 40px;
+}
+
+@media screen and (max-width: 350px) {
+  .Nav__section {
+    font-size: 12px;
+  }
+  .logo {
+    height: 20px;
+  }
 }

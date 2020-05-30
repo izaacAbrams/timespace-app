@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TokenService from "../../services/token-service";
 import IdleService from "../../services/idle-service";
+import logo from "../../images/logo.svg";
 import "./Nav.css";
 
 export default class Nav extends Component {
@@ -41,8 +42,8 @@ export default class Nav extends Component {
   render() {
     return (
       <nav className="Nav">
-        <Link to="/" className="Nav__section Nav_underline">
-          Home
+        <Link to="/" className="Nav__section Nav__logo Nav_underline">
+          <img src={logo} className="logo" alt="Home" />
         </Link>
         <Link to="/schedules" className="Nav__section Nav_underline">
           Schedules

@@ -48,6 +48,7 @@ body {
 
 .modal-close {
   align-self: flex-end;
+  color: #161925;
   margin: 0;
   font-size: 18px;
 }
