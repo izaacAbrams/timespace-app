@@ -25,9 +25,12 @@
 }
 
 .SignUpForm__form > button {
+  font-family: "Roboto", sans-serif;
   display: block;
   margin: 20px auto;
   padding: 5px 15px;
+  background-color: #edf2f4;
+  color: #161925;
   border: 0;
   border-radius: 3px;
 }
