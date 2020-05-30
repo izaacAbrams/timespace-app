@@ -40,7 +40,6 @@ class NewApptForm extends Component {
     };
     this.context.addAppt(newAppt);
     this.setState({
-      ...this.state,
       appt_date_time: moment().format(),
       name: "",
       email: "",
@@ -69,6 +68,7 @@ class NewApptForm extends Component {
     );
     let i = parseInt(this.context.currentSchedule.time_open);
     timeList.push(moment(i, "Hmm").format("HHmm"));
+    // iterates through open/closed times at the duration of the service
     while (i < parseInt(this.context.currentSchedule.time_closed)) {
       i = moment(i, "Hmm")
         .add(((i * 3600 + serviceDuration.duration * 60) / 3600) % i, "hours")
