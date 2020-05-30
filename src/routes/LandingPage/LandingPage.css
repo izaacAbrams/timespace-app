@@ -1,8 +1,7 @@
 .LandingPage {
   background: url("../../images/landing-page1.png") no-repeat center fixed;
-  /* background-repeat: no-repeat;
-  background-position: center; */
   display: flex;
+  height: -webkit-fill-available;
   flex-direction: column;
   background-size: cover;
   color: white;
@@ -28,13 +27,14 @@
 }
 
 .LandingPage__button {
-  padding: 15px;
+  padding: 10px;
+  font-size: 14px;
   color: #edf2f4;
   font-family: "Fjalla One", sans-serif;
   text-decoration: none;
   background-color: #161925;
   border: 1px solid #161925;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 .LandingPage__button:hover {

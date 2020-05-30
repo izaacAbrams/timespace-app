@@ -16,6 +16,8 @@
 
 .LoginForm__section {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .LoginForm__email,

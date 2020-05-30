@@ -56,6 +56,9 @@ body {
   .Appointments__main_appt {
     font-size: 14px;
   }
+  .Appointments__notes {
+    font-size: 12px;
+  }
   .ApptCard__btn {
     padding: 3px;
   }
@@ -63,6 +66,13 @@ body {
     font-size: 35px;
   }
   .date-card-date {
-    font-size: 18px;
+    font-size: 15px;
+  }
+  .LandingPage__button {
+    font-size: 12px;
+    padding: 5px;
+  }
+  .LandingPage {
+    padding: 20% 10%;
   }
 }
