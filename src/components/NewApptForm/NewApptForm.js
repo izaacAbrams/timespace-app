@@ -122,6 +122,7 @@ class NewApptForm extends Component {
     } else {
       document.getElementById("next_btn").classList.add("disabled");
     }
+
     this.setState({
       email: e.target.value,
     });
@@ -183,7 +184,7 @@ class NewApptForm extends Component {
   renderQuestions() {
     const questions = Object.values(this.state.questions);
     return (
-      <h2 key={this.state.currentQuestion}>
+      <h2 className="NewApptForm__question" key={this.state.currentQuestion}>
         {questions[this.state.currentQuestion]}
       </h2>
     );
@@ -195,15 +196,20 @@ class NewApptForm extends Component {
     ];
     const backButton =
       this.state.currentQuestion !== 0 ? (
-        <button onClick={(e) => this.handleBack(e)}>Back</button>
+        <button
+          className="NewApptForm__btn"
+          onClick={(e) => this.handleBack(e)}
+        >
+          Back
+        </button>
       ) : (
         <React.Fragment />
       );
     return currentQuestion !== undefined ? (
-      <div className="NewAppt__buttons">
+      <div className="NewApptForm__buttons">
         {backButton}
         <button
-          className="NewAppt__btn disabled"
+          className="NewApptForm__btn disabled"
           id="next_btn"
           onClick={(e) => this.handleNext(e)}
         >
@@ -211,9 +217,11 @@ class NewApptForm extends Component {
         </button>
       </div>
     ) : (
-      <div className="NewAppt__buttons">
+      <div>
         {backButton}
-        <button type="submit">Submit</button>
+        <button className="NewApptForm__btn" type="submit">
+          Submit
+        </button>
       </div>
     );
   }
@@ -224,13 +232,18 @@ class NewApptForm extends Component {
     if (currentIndex === "name") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule_name">Name:</label>
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="schedule_name"
+          >
+            Full Name:
+          </label>
           <input
             type="text"
             name="schedule_name"
+            className="NewApptForm__input"
             value={this.state.name}
             onChange={(e) => this.handleName(e)}
-            placeholder="Joe Smith"
             required
           />
           {this.state.error_name ? (
@@ -243,13 +256,18 @@ class NewApptForm extends Component {
     } else if (currentIndex === "email") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule_email">Email:</label>
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="schedule_email"
+          >
+            Email:
+          </label>
           <input
             type="text"
+            className="NewApptForm__input"
             value={this.state.email}
             onChange={(e) => this.handleEmail(e)}
             name="schedule_email"
-            placeholder="joe.smith@example.com"
             required
           />
         </div>
@@ -257,9 +275,15 @@ class NewApptForm extends Component {
     } else if (currentIndex === "date") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule_date">Date:</label>
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="schedule_date"
+          >
+            Date:
+          </label>
           <input
             type="date"
+            className="NewApptForm__input"
             value={this.state.appt_date}
             onChange={(e) => this.handleDate(e)}
             name="schedule_date"
@@ -270,7 +294,12 @@ class NewApptForm extends Component {
     } else if (currentIndex === "time") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule_time">Appointment time:</label>
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="schedule_time"
+          >
+            Appointment time:
+          </label>
           <div className="form-time" name="schedule_time" required>
             {this.handleApptTimes().map((time) => {
               return (
@@ -292,7 +321,12 @@ class NewApptForm extends Component {
     } else if (currentIndex === "service") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="schedule_services">Service:</label>
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="schedule_services"
+          >
+            Service:
+          </label>
           <select
             className="form-appt-type"
             name="schedule_services"
@@ -306,10 +340,13 @@ class NewApptForm extends Component {
     } else if (currentIndex === "notes") {
       return (
         <div className="NewApptForm__section">
-          <label htmlFor="notes">Comments:</label>
+          <label className="input_label NewApptForm__label" htmlFor="notes">
+            Comments:
+          </label>
           <textarea
             name="notes"
             value={this.state.notes}
+            className="NewApptForm__text"
             onChange={(e) => this.handleNotes(e)}
             placeholder="Any extra notes for the staff?"
           ></textarea>
@@ -327,7 +364,9 @@ class NewApptForm extends Component {
             onSubmit={(e) => this.handleSubmit(e)}
             className="NewApptForm__form"
           >
-            <h1>{this.context.currentSchedule.schedule}</h1>
+            <h1 className="NewApptForm__title">
+              {this.context.currentSchedule.schedule}
+            </h1>
 
             {this.renderQuestions()}
             {this.renderInputs()}

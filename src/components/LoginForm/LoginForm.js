@@ -39,7 +39,9 @@ class LoginForm extends Component {
           <form id="login" onSubmit={this.handleSubmitJwtAuth}>
             <div role="alert">{error && <p className="red">{error}</p>}</div>
             <div className="LoginForm__section">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email" className="input_label">
+                Email:
+              </label>
               <input
                 type="text"
                 className="LoginForm__email"
@@ -48,7 +50,9 @@ class LoginForm extends Component {
               />
             </div>
             <div className="LoginForm__section">
-              <label htmlFor="password">Password:</label>
+              <label htmlFor="password" className="input_label">
+                Password:
+              </label>
               <input
                 type="password"
                 name="password"
@@ -56,7 +60,9 @@ class LoginForm extends Component {
                 required
               />
             </div>
-            <button type="submit">Submit</button>
+            <button className="submit_btn" type="submit">
+              Submit
+            </button>
           </form>
         </section>
       </div>

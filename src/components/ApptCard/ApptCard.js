@@ -17,10 +17,16 @@ export default class ApptCard extends Component {
         ) : (
           <></>
         )}
-        <button onClick={() => this.props.handleEdit(this.props.appt.id)}>
+        <button
+          className="ApptCard__btn"
+          onClick={() => this.props.handleEdit(this.props.appt.id)}
+        >
           Edit
         </button>
-        <button onClick={() => this.props.handleDelete(this.props.appt.id)}>
+        <button
+          className="ApptCard__btn"
+          onClick={() => this.props.handleDelete(this.props.appt.id)}
+        >
           Delete
         </button>
       </div>

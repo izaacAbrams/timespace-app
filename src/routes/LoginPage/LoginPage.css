@@ -1,0 +1,15 @@
+.LoginPage__section {
+  background-image: url("../../images/login_page.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: calc(100vh - 59px);
+}
+
+.LoginPage__header {
+  margin: 0;
+  padding: 20px;
+  font-family: "Fjalla One", sans-serif;
+  text-align: center;
+  color: #edf2f4;
+}

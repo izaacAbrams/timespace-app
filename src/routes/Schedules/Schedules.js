@@ -45,10 +45,12 @@ class Schedules extends Component {
         <React.Fragment />
       );
     return (
-      <div>
-        <div className="Schedule__header">
-          <h1>Your Schedules</h1>
-          <Link to="/new-schedule">New</Link>
+      <div className="Schedules__main">
+        <div className="Schedules__header">
+          <h1 className="header">Your Schedules</h1>
+          <Link to="/new-schedule" className="new_schedule">
+            +
+          </Link>
         </div>
         <div className="modal" onClick={(e) => this.handleClose(e)}>
           <div className="display-modal">

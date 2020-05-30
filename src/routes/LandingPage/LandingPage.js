@@ -18,7 +18,7 @@ export default function LandingPage() {
         In the case you just want to manually enter in an appointment, not to
         worry, its easy to create a new appointment or edit an existing one!
       </p>
-      <p>
+      <p className="LandingPage__desc">
         To demo from the user side, try the demo user: demo@account.com with
         password: demopassword
       </p>

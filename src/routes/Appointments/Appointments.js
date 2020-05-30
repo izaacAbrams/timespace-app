@@ -105,16 +105,22 @@ class Appointments extends Component {
       <div className="Appointments">
         <section className="Appointments__date">
           <form id="view-schedule">
-            <h2>{this.context.currentSchedule.schedule}</h2>
+            <header className="Appointments__header">
+              <h2 className="Appointments__title">
+                {this.context.currentSchedule.schedule}
+              </h2>
+              <Link
+                className="new_appt"
+                to={`/${this.context.currentSchedule.schedule_url}/new-appt`}
+              >
+                +
+              </Link>
+            </header>
             <DatePicker
               handleDateSubmit={(date) => this.handleDateSubmit(date)}
               apptList={this.filterAppts(this.context.apptList)}
               selected={this.context.selected_date}
             />
-
-            <Link to={`/${this.context.currentSchedule.schedule_url}/new-appt`}>
-              New Appointment
-            </Link>
           </form>
         </section>
         <div className="modal" onClick={(e) => this.handleClose(e)}>

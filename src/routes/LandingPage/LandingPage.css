@@ -1,32 +1,30 @@
 .LandingPage {
-  background-image: url("../../images/landing-page2.svg");
-  background-color: #161925;
-  background-repeat: no-repeat;
-  background-position: center;
+  background: url("../../images/landing-page1.png") no-repeat center fixed;
+  /* background-repeat: no-repeat;
+  background-position: center; */
   display: flex;
   flex-direction: column;
   background-size: cover;
   color: white;
   text-align: center;
-  height: calc(100vh - 61.6px);
-  padding: 15% 20%;
+  padding: 10% 20%;
 }
 
 .LandingPage__title {
   font-family: "Comfortaa", cursive;
+  font-weight: 700;
   font-size: 50px;
   padding-bottom: 50px;
   margin: 0;
 }
 
 .LandingPage__desc {
-  font-family: "Abel", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: white;
   font-size: 16px;
   background-color: #00000030;
   padding: 20px;
   border-radius: 10px;
-  /* box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.6); */
 }
 
 .LandingPage__button {
@@ -43,6 +41,7 @@
   background-color: #23395b;
   border: 1px solid #23395b;
   text-decoration: underline;
+  text-decoration-color: #cf5de3;
 }
 .LandingPage__btn_wrapper {
   display: flex;

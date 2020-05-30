@@ -1,3 +1,11 @@
 .Appointments__notes {
   font-size: 16px;
 }
+
+.ApptCard__btn {
+  background-color: #edf2f4;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 3px;
+}

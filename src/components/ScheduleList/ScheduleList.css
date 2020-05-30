@@ -1,11 +1,40 @@
 .Schedules__section {
-  border: 2px solid black;
-  margin: 5px;
+  background-color: #23395b;
+  width: 90%;
+  margin: 20px;
   padding: 5px;
   display: flex;
   justify-content: space-between;
+  border-radius: 5px;
 }
 
 .Schedules__buttons {
   align-self: center;
+}
+
+.Schedule__btn {
+  background-color: #edf2f4;
+  border: 2px solid #23395b;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.Schedule__btn:hover {
+  text-decoration: underline #cf5de3;
+}
+.schedule_title {
+  color: #edf2f4;
+  padding: 10px 300px 10px 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 620px) {
+  .schedule_title {
+    padding: 10px 50px 10px 10px;
+  }
 }

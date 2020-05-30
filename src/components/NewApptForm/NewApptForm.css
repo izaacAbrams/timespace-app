@@ -1,47 +1,103 @@
 .NewApptForm__section {
-  padding: 5px;
-}
-
-.NewApptForm__section > label {
-  margin: 0 10px;
+  padding: 20px;
 }
 
 .NewApptForm__form {
   display: inline-block;
-  background-color: lightgrey;
+  background-color: #23395b;
   padding: 20px;
-  margin: auto;
+  margin: 50px auto;
   font-size: 18px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.NewApptForm__title {
+  font-family: "Comfortaa", sans-serif;
+  color: #edf2f4;
+  margin: 5px;
+  padding: 5px;
+}
+
+.NewApptForm__question {
+  font-family: "Fjalla One", sans-serif;
+  font-weight: 100;
+  color: #edf2f4;
+}
+
+.NewApptForm__input {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  background-color: #edf2f4;
+  padding: 3px 5px;
+  border: none;
+
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.NewApptForm__label {
+  color: #edf2f4;
 }
 
 .NewApptForm__main {
   display: flex;
 }
 
-.NewApptForm__title {
-  text-align: center;
-  padding: 15px;
+.NewApptForm__btn {
+  background-color: #161925;
+  color: #edf2f4;
+  padding: 5px 10px;
+  border: none;
+  margin: 10px;
+  border-radius: 3px;
 }
 
-.NewApptForm__form > button {
+.NewApptForm__btn:hover {
+  text-decoration: underline #cf5de3;
+}
+
+.NewApptForm__text {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
   display: block;
-  margin: auto;
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .time-blocks {
   cursor: pointer;
-  border: 1px solid black;
+  color: #edf2f4;
+  border: 1px solid #edf2f4;
+  border-radius: 3px;
   margin: 10px;
 }
 
 .time-list {
   cursor: pointer;
   text-align: center;
+  margin: 10px;
 }
 
 .time-blocks:hover,
 .selected {
-  background-color: darkgray;
+  color: #161925;
+  background-color: #8ea8c3;
+}
+
+.form-time {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.form-appt-type {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  margin: 0 10px;
+  border-radius: 3px;
 }
 
 .disabled {

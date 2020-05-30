@@ -86,17 +86,22 @@ export default class EditScheduleForm extends Component {
   render() {
     return (
       <form onSubmit={(e) => this.handleSubmit(e)}>
-        <h3>Edit Schedule</h3>
-        <label htmlFor="schedule_name">Name:</label>
+        <h3 className="EditSchedule__title">Edit Schedule</h3>
+        <label className="input_label" htmlFor="schedule_name">
+          Name:
+        </label>
         <input
           type="text"
+          className="Edit__input"
           onChange={(e) => this.handleName(e)}
           name="schedule_name"
         />
         <div className="EditSchedule__section">
-          <label htmlFor="hour_open">Time Open:</label>
+          <label className="input_label" htmlFor="hour_open">
+            Time Open:
+          </label>
           <select
-            className="EditSchedule__hours"
+            className="Edit__hours"
             onClick={(e) => this.handleTimeOpen(e)}
             name="hour_open"
             required
@@ -107,9 +112,11 @@ export default class EditScheduleForm extends Component {
           </select>
         </div>
         <div className="EditSchedule__section">
-          <label htmlFor="hour_open">Time Closed:</label>
+          <label className="input_label" htmlFor="hour_open">
+            Time Closed:
+          </label>
           <select
-            className="EditSchedule__hours"
+            className="Edit__hours"
             onClick={(e) => this.handleTimeClosed(e)}
             name="hour_closed"
             required
@@ -124,12 +131,19 @@ export default class EditScheduleForm extends Component {
             this.handleServicesSubmit(name, duration)
           }
         />
+        {this.state.services.length ? (
+          <h4 className="EditSchedule__service_list">Services:</h4>
+        ) : (
+          <></>
+        )}
         {this.state.services.map((service) => (
-          <p key={service.name + service.duration}>
+          <p className="service_list" key={service.name + service.duration}>
             {service.name}: {service.duration} mins
           </p>
         ))}
-        <button type="submit">Submit</button>
+        <button className="EditSchedule__submit" type="submit">
+          Submit
+        </button>
       </form>
     );
   }

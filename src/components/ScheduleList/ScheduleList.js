@@ -9,14 +9,21 @@ export default class ScheduleList extends Component {
   render() {
     return (
       <div className="Schedules__section">
-        <Link to={`/schedules/${this.props.schedule.schedule_url}`}>
+        <Link
+          className="schedule_title"
+          to={`/schedules/${this.props.schedule.schedule_url}`}
+        >
           {this.props.schedule.schedule}
         </Link>
         <div className="Schedules__buttons">
-          <button onClick={() => this.props.handleEdit(this.props.schedule.id)}>
+          <button
+            className="Schedule__btn"
+            onClick={() => this.props.handleEdit(this.props.schedule.id)}
+          >
             Edit
           </button>
           <button
+            className="Schedule__btn"
             onClick={() => this.props.handleDelete(this.props.schedule.id)}
           >
             Delete

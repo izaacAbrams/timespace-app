@@ -15,7 +15,7 @@ export default class Nav extends Component {
   renderLogout() {
     return (
       <div className="Header__logged-in">
-        <Link onClick={this.handleLogoutClick} to="/">
+        <Link onClick={this.handleLogoutClick} to="/" className="logout">
           Logout
         </Link>
       </div>
@@ -41,10 +41,10 @@ export default class Nav extends Component {
   render() {
     return (
       <nav className="Nav">
-        <Link to="/" className="Nav__section">
+        <Link to="/" className="Nav__section Nav_underline">
           Home
         </Link>
-        <Link to="/schedules" className="Nav__section">
+        <Link to="/schedules" className="Nav__section Nav_underline">
           Schedules
         </Link>
         {TokenService.hasAuthToken() ? this.renderLogout() : this.renderLogin()}

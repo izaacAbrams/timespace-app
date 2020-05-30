@@ -37,21 +37,40 @@ class SignUpForm extends Component {
           >
             <div role="alert">{error && <p className="red">{error}</p>}</div>
             <div className="SignUpForm__section">
-              <label htmlFor="name">Full Name:</label>
-              <input type="text" name="name" placeholder="Joe Smith" required />
-            </div>
-            <div className="SignUpForm__section">
-              <label htmlFor="email">Email:</label>
+              <label className="input_label SignUpForm__label" htmlFor="name">
+                Full Name:
+              </label>
               <input
-                type="email"
-                name="email"
-                placeholder="email@example.com"
+                type="text"
+                className="SignUpForm__input"
+                name="name"
                 required
               />
             </div>
             <div className="SignUpForm__section">
-              <label htmlFor="password">Password:</label>
-              <input type="password" name="password" required />
+              <label className="input_label SignUpForm__label" htmlFor="email">
+                Email:
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="SignUpForm__input"
+                required
+              />
+            </div>
+            <div className="SignUpForm__section">
+              <label
+                className="SignUpForm__label input_label"
+                htmlFor="password"
+              >
+                Password:
+              </label>
+              <input
+                type="password"
+                className="SignUpForm__input"
+                name="password"
+                required
+              />
             </div>
 
             <button type="submit">Submit</button>

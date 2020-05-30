@@ -1,17 +1,13 @@
 .SignUpForm__section {
-  padding: 5px;
+  padding: 10px;
   font-size: 18px;
 }
 
-.SignUpForm__section > label {
-  margin: 0 10px;
-}
-
 .SignUpForm__form {
-  background-color: lightgrey;
+  background-color: #23395b;
+  border-radius: 5px;
   flex-direction: column;
-
-  padding: 20px;
+  padding: 30px 30px 0 30px;
 }
 
 .SignUpForm__main {
@@ -20,10 +16,33 @@
 }
 
 .SignUpForm__title {
+  margin: 0;
+  font-family: "Fjalla One", sans-serif;
+  font-weight: 100;
+  padding: 20px;
+  color: #edf2f4;
   text-align: center;
 }
 
 .SignUpForm__form > button {
   display: block;
-  margin: auto;
+  margin: 20px auto;
+  padding: 5px 15px;
+  border: 0;
+  border-radius: 3px;
+}
+
+.SignUpForm__form > button:hover {
+  background-color: #8ea8c3;
+}
+.SignUpForm__label {
+  color: #edf2f4;
+}
+
+.SignUpForm__input {
+  font-size: 16px;
+  margin: 0 10px;
+  padding: 3px 5px;
+  border: 0;
+  border-radius: 3px;
 }

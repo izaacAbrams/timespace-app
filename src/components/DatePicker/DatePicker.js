@@ -50,7 +50,12 @@ export default class DatePicker extends Component {
   render() {
     return (
       <div className="form-section date-picker-container">
-        <button onClick={(e) => this.handlePrevious(e)}>Back</button>
+        <button
+          className="DatePicker__arrows"
+          onClick={(e) => this.handlePrevious(e)}
+        >
+          &larr;
+        </button>
         {this.handleDateCards().map((date) => {
           return (
             <div
@@ -78,7 +83,12 @@ export default class DatePicker extends Component {
             </div>
           );
         })}
-        <button onClick={(e) => this.handleNext(e)}>Next</button>
+        <button
+          className="DatePicker__arrows"
+          onClick={(e) => this.handleNext(e)}
+        >
+          &rarr;
+        </button>
       </div>
     );
   }

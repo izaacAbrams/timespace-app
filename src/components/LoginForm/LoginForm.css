@@ -1,28 +1,45 @@
 .LoginForm {
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  color: #444;
   text-align: center;
   line-height: 1.5;
   min-width: 320px;
+  display: flex;
+  justify-content: center;
 }
 
 .LoginForm__main_section {
   min-height: 200px;
   padding: 30px 15px;
-  background-color: #bbb;
+  background-color: #edf2f495;
+  width: 80%;
+  border-radius: 10px;
 }
 
 .LoginForm__section {
-  padding: 5px;
-}
-
-.red {
-  font-size: 16px;
-  color: red;
+  padding: 10px;
 }
 
 .LoginForm__email,
 .LoginForm__password {
   font-size: 18px;
+  margin: 5px;
+  padding: 3px 5px;
+  border: none;
+  border-radius: 5px;
+}
+
+.submit_btn {
+  padding: 10px 20px;
+  margin: 20px 0 0;
+  color: #edf2f4;
+  font-family: "Fjalla One", sans-serif;
+  text-decoration: none;
+  background-color: #161925;
+  border: 1px solid #161925;
+  border-radius: 5px;
+}
+
+.submit_btn:hover {
+  background-color: #23395b;
+  border: 1px solid #23395b;
+  text-decoration: underline;
 }

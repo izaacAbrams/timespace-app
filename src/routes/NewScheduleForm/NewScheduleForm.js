@@ -48,14 +48,14 @@ class NewScheduleForm extends Component {
       return <React.Fragment />;
     } else if (this.state.services.length === 1) {
       return (
-        <p>
+        <p className="service_list">
           {this.state.services[0].name} - {this.state.services[0].duration} mins
         </p>
       );
     } else {
       return this.state.services.map((service) => {
         return (
-          <p key={service.name + service.duration}>
+          <p className="service_list" key={service.name + service.duration}>
             {service.name} - {service.duration} mins
           </p>
         );
@@ -139,24 +139,38 @@ class NewScheduleForm extends Component {
     return (
       <div className="NewSchedule">
         <header>
-          <h1>Create a Schedule</h1>
+          <h1 className="NewSchedule__title">Create a Schedule</h1>
         </header>
         <section className="NewSchedule__main_section">
-          <form id="new-schedule" onSubmit={(e) => this.handleSubmit(e)}>
+          <form
+            id="new-schedule"
+            className="NewSchedule__form"
+            onSubmit={(e) => this.handleSubmit(e)}
+          >
             <div className="NewSchedule__section">
-              <label htmlFor="schedule-name">Schedule Name:</label>
+              <label
+                htmlFor="schedule-name"
+                className="input_label NewSchedule_label"
+              >
+                Schedule Name:
+              </label>
               <input
                 type="text"
+                className="schedule_input "
                 name="schedule-name"
-                placeholder="Sally's Salon & Spa"
                 onChange={(e) => this.handleName(e)}
                 required
               />
             </div>
             <div className="NewSchedule__section">
-              <label htmlFor="hour_open">Time Open:</label>
+              <label
+                htmlFor="hour_open"
+                className="input_label NewSchedule_label"
+              >
+                Time Open:
+              </label>
               <select
-                className="NewSchedule__hours"
+                className="Edit__hours"
                 name="hour_open"
                 onChange={(e) => this.handleTimeOpen(e)}
                 required
@@ -167,9 +181,14 @@ class NewScheduleForm extends Component {
               </select>
             </div>
             <div className="NewSchedule__section">
-              <label htmlFor="hour_closed">Time Closed:</label>
+              <label
+                htmlFor="hour_closed"
+                className="input_label NewSchedule_label"
+              >
+                Time Closed:
+              </label>
               <select
-                className="NewSchedule__hours"
+                className="Edit__hours"
                 name="hour_closed"
                 onChange={(e) => this.handleTimeClosed(e)}
                 required
@@ -180,9 +199,19 @@ class NewScheduleForm extends Component {
               </select>
             </div>
             <div className="NewSchedule__section">
-              <label htmlFor="services">Services:</label>
+              <label
+                htmlFor="services"
+                className="NewSchedule_label input_label"
+              >
+                Services:
+              </label>
               {this.renderServices()}
-              <button onClick={(e) => this.handleServicesModal(e)}>New</button>
+              <button
+                className="new_service_btn"
+                onClick={(e) => this.handleServicesModal(e)}
+              >
+                New
+              </button>
               <div className="modal" onClick={(e) => this.handleClose(e)}>
                 <div className="display-modal">
                   <p className="modal-close">x</p>
@@ -191,7 +220,7 @@ class NewScheduleForm extends Component {
               </div>
             </div>
 
-            <button type="submit" className="submit-btn" disabled={true}>
+            <button type="submit" className="submit_btn" disabled={true}>
               Submit
             </button>
           </form>

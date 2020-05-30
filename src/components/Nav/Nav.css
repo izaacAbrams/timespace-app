@@ -1,7 +1,6 @@
 .Nav__section {
-  text-align: center;
   color: #edf2f4;
-  font-family: "Fjalla One", sans-serif;
+  font-family: "Comfortaa", sans-serif;
   text-decoration: none;
 }
 
@@ -9,18 +8,21 @@
   display: flex;
   background-color: #161925;
   justify-content: space-between;
-
   padding: 20px;
 }
 
-.register {
+.register,
+.login,
+.logout {
   padding: 0 10px;
   color: #edf2f4;
   text-decoration: none;
 }
 
-.login {
-  padding: 0 10px;
-  color: #edf2f4;
-  text-decoration: none;
+.register:hover,
+.login:hover,
+.logout:hover,
+.Nav_underline:hover {
+  text-decoration: underline;
+  text-decoration-color: #cf5de3;
 }

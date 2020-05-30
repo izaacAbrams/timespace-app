@@ -1,6 +1,6 @@
 .selected {
-  background-color: darkgrey;
-  color: black;
+  background-color: #8ea8c3;
+  color: #161925;
 }
 
 .date-card-date {
@@ -14,17 +14,49 @@
 }
 
 .date-card-bullet {
-  font-size: 22px;
+  font-size: 20px;
 }
 
-@media screen and (max-width: 510px) {
-  .date-card-date {
-    font-size: 18px;
-  }
+.DatePicker__arrows {
+  border: none;
+  background: none;
+  font-size: 26px;
+  font-family: monospace;
+  cursor: pointer;
+  color: #edf2f4;
+}
+
+.date-card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #8ea8c3;
+  border-left: 0;
+  width: 10%;
+  height: 60px;
+  cursor: pointer;
+}
+
+.date-card-container:first-of-type {
+  border-left: 1px solid #8ea8c3;
+  border-radius: 5px 0 0 5px;
+}
+
+.date-card-container:last-of-type {
+  border-radius: 0 5px 5px 0;
+}
+
+.date-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-card-date {
+  font-size: 22px;
 }
 
 @media screen and (max-width: 440px) {
   .date-card-date {
-    font-size: 14px;
+    font-size: 12px;
   }
 }

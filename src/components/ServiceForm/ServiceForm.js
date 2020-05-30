@@ -4,6 +4,7 @@ export default class ServiceForm extends Component {
   state = {
     name: "",
     duration: "15",
+    error: null,
   };
   handleAdd(e) {
     e.preventDefault();
@@ -20,27 +21,46 @@ export default class ServiceForm extends Component {
     });
   }
   render() {
+    const error = this.state.error ? (
+      <p className="red">{this.state.error}</p>
+    ) : (
+      <React.Fragment />
+    );
     return (
       <div className="ServiceForm__section">
-        <h2>{this.props.header}</h2>
+        {this.props.header ? (
+          <h2 className="ServiceForm__title">{this.props.header}</h2>
+        ) : (
+          <></>
+        )}
         <div className="ServiceForm__name">
-          <label htmlFor="service">Service:</label>
+          <label className="input_label ServiceForm__label" htmlFor="service">
+            Service:
+          </label>
           <input
             name="service"
+            className="Edit__input"
             onChange={(e) => this.handleService(e)}
             type="text"
           />
         </div>
         <div className="ServiceForm__name">
-          <label htmlFor="duration">Duration:</label>
-          <select onChange={(e) => this.handleDuration(e)} name="duration">
+          <label className="input_label ServiceForm__label" htmlFor="duration">
+            Duration:
+          </label>
+          <select
+            className="Edit__hours"
+            onChange={(e) => this.handleDuration(e)}
+            name="duration"
+          >
             <option>15 min</option>
             <option>30 min</option>
             <option>60 min</option>
           </select>
         </div>
+        {error}
         <button className="add_btn" onClick={(e) => this.handleAdd(e)}>
-          Add
+          Add Service
         </button>
       </div>
     );
