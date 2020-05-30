@@ -28,8 +28,7 @@
 .login:hover,
 .logout:hover,
 .Nav_underline:hover {
-  text-decoration: underline;
-  text-decoration-color: #cf5de3;
+  text-decoration: underline #cf5de3;
 }
 
 .logo {

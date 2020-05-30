@@ -38,6 +38,10 @@
   font-size: 12px;
 }
 
+.NewSchedule__submit:hover {
+  background-color: #161925;
+  text-decoration: underline #cf5de3;
+}
 .ServiceForm__title {
   color: #161925;
   font-family: "Fjalla One", sans-serif;

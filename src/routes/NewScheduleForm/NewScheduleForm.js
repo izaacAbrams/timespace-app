@@ -107,7 +107,7 @@ class NewScheduleForm extends Component {
     this.context.services_modal = false;
     this.props.history.push("/new-schedule");
     if (this.state.schedule !== "") {
-      document.querySelector(".submit-btn").disabled = false;
+      document.querySelector(".submit_btn").disabled = false;
     }
   }
   handleClose(e) {
@@ -220,7 +220,11 @@ class NewScheduleForm extends Component {
               </div>
             </div>
 
-            <button type="submit" className="submit_btn" disabled={true}>
+            <button
+              type="submit"
+              className="submit_btn NewSchedule__submit"
+              disabled={true}
+            >
               Submit
             </button>
           </form>

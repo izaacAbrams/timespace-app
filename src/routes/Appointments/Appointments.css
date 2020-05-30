@@ -6,7 +6,6 @@
 }
 
 .Appointments__date {
-  min-height: 200px;
   padding: 20px;
   background-color: #23395b;
 }
@@ -24,7 +23,6 @@
 .Appointments__header {
   font-family: "Fjalla One", sans-serif;
   display: flex;
-  margin: 15px 0;
   align-items: center;
   justify-content: space-around;
 }
