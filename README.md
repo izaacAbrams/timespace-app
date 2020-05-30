@@ -35,17 +35,17 @@ TimeSpace is a scheduling app for small businesses. Easily create custom schedul
 
 ## Screenshots
 
-![Landing Page](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LandingPage.PNG =948x470)
+<img src="https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LandingPage.PNG" alt="Login Page" width="948"/>
 
 The landing page, where you can demo creating a new appointment, or sign up.
 
-![Login Page](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LoginPage.PNG)
+<img src="https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/LoginPage.PNG" alt="Login Page" width="948"/>
 
-![Appointments](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/Appointments.PNG)
+<img src="https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/Appointments.PNG" alt="Login Page" width="948"/>
 
 An example of a schedule with multiple appointments for the day.
 
-![Schedules](https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/Schedules.PNG)
+<img src="https://github.com/izaacAbrams/timespaces-app/blob/master/src/images/Schedules.PNG" alt="Login Page" width="948"/>
 
 An example of a users view with multiple schedules.
 
