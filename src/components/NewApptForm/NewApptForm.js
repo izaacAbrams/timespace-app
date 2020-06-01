@@ -36,6 +36,7 @@ class NewApptForm extends Component {
       email,
       service,
       notes,
+      id: "",
       schedule: this.context.currentSchedule.id,
     };
     this.context.addAppt(newAppt);

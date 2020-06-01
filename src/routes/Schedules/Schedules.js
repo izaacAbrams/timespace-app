@@ -60,7 +60,7 @@ class Schedules extends Component {
         </div>
         {this.context.scheduleList.map((schedule) => (
           <ScheduleList
-            key={schedule.schedule + schedule.id}
+            key={schedule.schedule}
             schedule={schedule}
             handleEdit={(e) => this.handleEdit(e)}
             handleDelete={(id) => this.handleDelete(id)}
