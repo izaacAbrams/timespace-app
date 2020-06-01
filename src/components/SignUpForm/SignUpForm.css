@@ -1,4 +1,8 @@
 .SignUpForm__section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   padding: 10px;
   font-size: 18px;
 }
@@ -48,4 +52,13 @@
   padding: 3px 5px;
   border: 0;
   border-radius: 3px;
+}
+
+@media screen and (max-width: 400px) {
+  .SignUpForm__section {
+    flex-direction: column;
+  }
+  .SignUpForm__label {
+    padding-bottom: 10px;
+  }
 }
