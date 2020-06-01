@@ -22,7 +22,7 @@ export default class EditScheduleForm extends Component {
   }
   currentSchedule() {
     return this.context.scheduleList.find(
-      (schedule) => schedule.id === this.props.id
+      (schedule) => schedule.schedule_url === this.props.schedule
     );
   }
   handleSubmit(e) {

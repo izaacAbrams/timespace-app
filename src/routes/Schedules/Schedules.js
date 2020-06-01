@@ -9,11 +9,11 @@ import "./Schedules.css";
 class Schedules extends Component {
   static contextType = TimespaceContext;
   state = {
-    currentId: "",
+    currentSchedule: "",
   };
-  handleEdit(id) {
+  handleEdit(schedule) {
     this.context.schedule_modal = true;
-    this.setState({ currentId: id });
+    this.setState({ currentSchedule: schedule });
     document.querySelector(".modal").style.display = "block";
   }
 
@@ -29,18 +29,27 @@ class Schedules extends Component {
       document.querySelector(".modal").style.display = "block";
     }
   }
-  handleDelete(id) {
-    this.context.deleteSchedule(id);
+  handleDelete(currentSchedule) {
+    const schedule = this.context.scheduleList.find(
+      (schedule) => schedule.schedule_url === currentSchedule
+    );
+    this.context.deleteSchedule(schedule.id);
   }
 
   componentDidMount() {
     this.context.addScheduleList(TokenService.readJwtToken().user_id);
   }
 
+  componentDidUpdate() {
+    this.context.addScheduleList(TokenService.readJwtToken().user_id);
+  }
   render() {
     const renderEdit =
       this.context.schedule_modal === true ? (
-        <EditScheduleForm id={this.state.currentId} {...this.props.history} />
+        <EditScheduleForm
+          schedule={this.state.currentSchedule}
+          {...this.props.history}
+        />
       ) : (
         <React.Fragment />
       );
@@ -63,7 +72,7 @@ class Schedules extends Component {
             key={schedule.schedule}
             schedule={schedule}
             handleEdit={(e) => this.handleEdit(e)}
-            handleDelete={(id) => this.handleDelete(id)}
+            handleDelete={(schedule) => this.handleDelete(schedule)}
           />
         ))}
       </div>

@@ -18,13 +18,17 @@ export default class ScheduleList extends Component {
         <div className="Schedules__buttons">
           <button
             className="Schedule__btn"
-            onClick={() => this.props.handleEdit(this.props.schedule.id)}
+            onClick={() =>
+              this.props.handleEdit(this.props.schedule.schedule_url)
+            }
           >
             Edit
           </button>
           <button
             className="Schedule__btn"
-            onClick={() => this.props.handleDelete(this.props.schedule.id)}
+            onClick={() =>
+              this.props.handleDelete(this.props.schedule.schedule_url)
+            }
           >
             Delete
           </button>

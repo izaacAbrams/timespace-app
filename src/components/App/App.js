@@ -94,9 +94,8 @@ class App extends Component {
       });
     },
     addSchedule: (schedule) => {
-      ScheduleApiService.postSchedule(schedule).then((schedule) =>
-        this.state.scheduleList.push(schedule)
-      );
+      ScheduleApiService.postSchedule(schedule);
+      this.state.scheduleList.push(schedule);
     },
     addCurrentSchedule: (currentSchedule) => {
       this.setState({ currentSchedule });
