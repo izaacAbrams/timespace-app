@@ -175,6 +175,7 @@ class NewApptForm extends Component {
   }
 
   componentDidMount() {
+    this.setState({ services: this.context.currentSchedule });
     ApptApiService.getScheduleId(this.props.match.params.name).then(
       (schedule) => {
         this.context.addCurrentSchedule(schedule);
@@ -331,7 +332,7 @@ class NewApptForm extends Component {
           <select
             className="form-appt-type"
             name="schedule_services"
-            onClick={(e) => this.handleService(e)}
+            onChange={(e) => this.handleService(e)}
             required
           >
             {this.handleServices()}

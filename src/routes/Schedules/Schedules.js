@@ -37,12 +37,12 @@ class Schedules extends Component {
   }
 
   componentDidMount() {
-    this.context.addScheduleList(TokenService.readJwtToken().user_id);
+    if (!!!this.context.scheduleList.length) {
+      this.context.addScheduleList(TokenService.readJwtToken().user_id);
+    }
   }
 
-  componentDidUpdate() {
-    this.context.addScheduleList(TokenService.readJwtToken().user_id);
-  }
+  // componentDidUpdate() {}
   render() {
     const renderEdit =
       this.context.schedule_modal === true ? (

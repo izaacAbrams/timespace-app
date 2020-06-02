@@ -24,9 +24,10 @@
   - /new-appt/:schedule_id GET returns only the times of taken appointments.
 
 - ### /auth
+
   - /auth/login POST Given correct login creds, will create JWT and return the created token.
 
-* ### /users
+- ### /users
   - POST given that the email has not been taken, will create user.
 
 ## Summary
