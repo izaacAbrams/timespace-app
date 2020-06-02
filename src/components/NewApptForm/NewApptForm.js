@@ -169,13 +169,13 @@ class NewApptForm extends Component {
   }
   handleBack(e) {
     e.preventDefault();
+    document.getElementById("next_btn").classList.remove("disabled");
     this.setState({
       currentQuestion: this.state.currentQuestion - 1,
     });
   }
 
   componentDidMount() {
-    this.setState({ services: this.context.currentSchedule });
     ApptApiService.getScheduleId(this.props.match.params.name).then(
       (schedule) => {
         this.context.addCurrentSchedule(schedule);
@@ -332,7 +332,7 @@ class NewApptForm extends Component {
           <select
             className="form-appt-type"
             name="schedule_services"
-            onChange={(e) => this.handleService(e)}
+            onClick={(e) => this.handleService(e)}
             required
           >
             {this.handleServices()}

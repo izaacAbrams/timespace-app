@@ -11,14 +11,18 @@ exports[`appointments route renders UI as expected 1`] = `
       className="Nav"
     >
       <a
-        className="Nav__section"
+        className="Nav__section Nav__logo Nav_underline"
         href="/"
         onClick={[Function]}
       >
-        Home
+        <img
+          alt="Home"
+          className="logo"
+          src="logo.svg"
+        />
       </a>
       <a
-        className="Nav__section"
+        className="Nav__section Nav_underline"
         href="/schedules"
         onClick={[Function]}
       >
@@ -69,6 +73,11 @@ exports[`appointments route renders UI as expected 1`] = `
         <br />
         <br />
         In the case you just want to manually enter in an appointment, not to worry, its easy to create a new appointment or edit an existing one!
+      </p>
+      <p
+        className="LandingPage__desc"
+      >
+        To demo from the user side, try the demo user: demo@account.com with password: demopassword
       </p>
       <div
         className="LandingPage__btn_wrapper"

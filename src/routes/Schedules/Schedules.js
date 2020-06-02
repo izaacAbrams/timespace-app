@@ -42,7 +42,6 @@ class Schedules extends Component {
     }
   }
 
-  // componentDidUpdate() {}
   render() {
     const renderEdit =
       this.context.schedule_modal === true ? (
