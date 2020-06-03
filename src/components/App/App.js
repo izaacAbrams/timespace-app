@@ -49,6 +49,7 @@ class App extends Component {
       });
     },
     addApptTimesList: (scheduleId) => {
+      //only for adding times of taken appts for when making new appt
       ApptApiService.getTimesForNewAppt(scheduleId).then((appt) => {
         const apptTimesList = appt.map((appt) => {
           return {

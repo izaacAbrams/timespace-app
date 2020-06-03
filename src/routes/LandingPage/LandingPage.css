@@ -6,13 +6,13 @@
   background-size: cover;
   color: white;
   text-align: center;
-  padding: 10% 20%;
+  padding: 20% 10%;
 }
 
 .LandingPage__title {
   font-family: "Comfortaa", cursive;
   font-weight: 700;
-  font-size: 50px;
+  font-size: 35px;
   padding-bottom: 50px;
   margin: 0;
 }
@@ -27,8 +27,8 @@
 }
 
 .LandingPage__button {
-  padding: 10px;
-  font-size: 14px;
+  font-size: 12px;
+  padding: 5px;
   color: #edf2f4;
   font-family: "Fjalla One", sans-serif;
   text-decoration: none;

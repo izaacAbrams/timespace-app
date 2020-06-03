@@ -34,22 +34,30 @@ export default class ServiceForm extends Component {
           <></>
         )}
         <div className="ServiceForm__name">
-          <label className="input_label ServiceForm__label" htmlFor="service">
+          <label
+            className="input_label ServiceForm__label"
+            htmlFor="serviceform_service"
+          >
             Service:
           </label>
           <input
             name="service"
+            id="serviceform_service"
             className="Edit__input"
             onChange={(e) => this.handleService(e)}
             type="text"
           />
         </div>
         <div className="ServiceForm__name">
-          <label className="input_label ServiceForm__label" htmlFor="duration">
+          <label
+            className="input_label ServiceForm__label"
+            htmlFor="serviceform_duration"
+          >
             Duration:
           </label>
           <select
             className="Edit__hours"
+            id="serviceform_duration"
             onChange={(e) => this.handleDuration(e)}
             name="duration"
           >

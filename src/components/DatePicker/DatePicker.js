@@ -15,6 +15,7 @@ export default class DatePicker extends Component {
   }
   handleDateCards() {
     const week = [];
+    //creates a week at a time, starting from current date
     for (let i = 0; i < 7; i++) {
       if (this.state.currentWeek !== 0) {
         let dates = moment().add(this.state.currentWeek, "weeks");

@@ -37,22 +37,30 @@ class SignUpForm extends Component {
           >
             <div role="alert">{error && <p className="red">{error}</p>}</div>
             <div className="SignUpForm__section">
-              <label className="input_label SignUpForm__label" htmlFor="name">
+              <label
+                className="input_label SignUpForm__label"
+                htmlFor="signup_name"
+              >
                 Full Name:
               </label>
               <input
                 type="text"
+                id="signup_name"
                 className="SignUpForm__input"
                 name="name"
                 required
               />
             </div>
             <div className="SignUpForm__section">
-              <label className="input_label SignUpForm__label" htmlFor="email">
+              <label
+                className="input_label SignUpForm__label"
+                htmlFor="signup_email"
+              >
                 Email:
               </label>
               <input
                 type="email"
+                id="signup_email"
                 name="email"
                 className="SignUpForm__input"
                 required
@@ -61,12 +69,13 @@ class SignUpForm extends Component {
             <div className="SignUpForm__section">
               <label
                 className="SignUpForm__label input_label"
-                htmlFor="password"
+                htmlFor="signup_password"
               >
                 Password:
               </label>
               <input
                 type="password"
+                id="signup_password"
                 className="SignUpForm__input"
                 name="password"
                 required

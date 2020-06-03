@@ -59,6 +59,7 @@ export default class EditScheduleForm extends Component {
     }
   }
   handleName(e) {
+    //regex to replace name and create a more readable url friendly version
     const urlName = e.target.value
       .replace(/[^\w\s]/gi, "")
       .replace(/\s+/g, "-")

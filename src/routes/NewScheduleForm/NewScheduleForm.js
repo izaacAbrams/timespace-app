@@ -36,6 +36,7 @@ class NewScheduleForm extends Component {
     this.props.history.push("/schedules");
   }
   renderHours() {
+    //creates array of formatted times for every hour
     let scheduleHours = [];
     for (let i = 100; i <= 2400; i += 100) {
       scheduleHours.push(moment(i, "Hmm").format("h:mm a"));
@@ -48,7 +49,7 @@ class NewScheduleForm extends Component {
       return <React.Fragment />;
     } else if (this.state.services.length === 1) {
       return (
-        <p className="service_list">
+        <p id="newschedule_services" className="service_list">
           {this.state.services[0].name} - {this.state.services[0].duration} mins
         </p>
       );
@@ -156,6 +157,7 @@ class NewScheduleForm extends Component {
               </label>
               <input
                 type="text"
+                id="schedule-name"
                 className="schedule_input "
                 name="schedule-name"
                 onChange={(e) => this.handleName(e)}
@@ -172,6 +174,7 @@ class NewScheduleForm extends Component {
               <select
                 className="Edit__hours"
                 name="hour_open"
+                id="hour_open"
                 onChange={(e) => this.handleTimeOpen(e)}
                 required
               >
@@ -190,6 +193,7 @@ class NewScheduleForm extends Component {
               <select
                 className="Edit__hours"
                 name="hour_closed"
+                id="hour_closed"
                 onChange={(e) => this.handleTimeClosed(e)}
                 required
               >
@@ -200,7 +204,7 @@ class NewScheduleForm extends Component {
             </div>
             <div className="NewSchedule__section">
               <label
-                htmlFor="services"
+                htmlFor="newschedule_services"
                 className="NewSchedule_label input_label"
               >
                 Services:

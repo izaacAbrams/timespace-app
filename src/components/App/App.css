@@ -66,27 +66,27 @@ body {
   font-size: 18px;
 }
 
-@media screen and (max-width: 510px) {
+@media screen and (min-width: 510px) {
   .Appointments__main_appt {
-    font-size: 14px;
+    font-size: 20px;
   }
   .Appointments__notes {
-    font-size: 12px;
+    font-size: 16px;
   }
   .ApptCard__btn {
-    padding: 3px;
+    padding: 5px 10px;
   }
   .LandingPage__title {
-    font-size: 35px;
+    font-size: 50px;
   }
   .date-card-date {
-    font-size: 15px;
+    font-size: 22px;
   }
   .LandingPage__button {
-    font-size: 12px;
-    padding: 5px;
+    font-size: 14px;
+    padding: 10px;
   }
   .LandingPage {
-    padding: 20% 10%;
+    padding: 10% 20%;
   }
 }

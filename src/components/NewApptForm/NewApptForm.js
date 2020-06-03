@@ -52,6 +52,7 @@ class NewApptForm extends Component {
   }
 
   takenTimes() {
+    //removes the times from the array that have already been taken
     return this.context.apptTimesList
       .filter(
         () =>
@@ -116,6 +117,7 @@ class NewApptForm extends Component {
   }
 
   handleEmail(e) {
+    //regex to check if it is an email syntax
     if (
       /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/.test(e.target.value)
     ) {
@@ -176,6 +178,7 @@ class NewApptForm extends Component {
   }
 
   componentDidMount() {
+    //on mount, loads only the times taken on current schedule
     ApptApiService.getScheduleId(this.props.match.params.name).then(
       (schedule) => {
         this.context.addCurrentSchedule(schedule);
@@ -242,6 +245,7 @@ class NewApptForm extends Component {
           </label>
           <input
             type="text"
+            id="schedule_name"
             name="schedule_name"
             className="NewApptForm__input"
             value={this.state.name}
@@ -266,6 +270,7 @@ class NewApptForm extends Component {
           </label>
           <input
             type="text"
+            id="schedule_email"
             className="NewApptForm__input"
             value={this.state.email}
             onChange={(e) => this.handleEmail(e)}
@@ -285,6 +290,7 @@ class NewApptForm extends Component {
           </label>
           <input
             type="date"
+            id="schedule_date"
             className="NewApptForm__input"
             value={this.state.appt_date}
             onChange={(e) => this.handleDate(e)}
@@ -302,7 +308,12 @@ class NewApptForm extends Component {
           >
             Appointment time:
           </label>
-          <div className="form-time" name="schedule_time" required>
+          <div
+            className="form-time"
+            id="schedule_time"
+            name="schedule_time"
+            required
+          >
             {this.handleApptTimes().map((time) => {
               return (
                 <div
@@ -332,6 +343,7 @@ class NewApptForm extends Component {
           <select
             className="form-appt-type"
             name="schedule_services"
+            id="schedule_services"
             onClick={(e) => this.handleService(e)}
             required
           >
@@ -342,11 +354,15 @@ class NewApptForm extends Component {
     } else if (currentIndex === "notes") {
       return (
         <div className="NewApptForm__section">
-          <label className="input_label NewApptForm__label" htmlFor="notes">
+          <label
+            className="input_label NewApptForm__label"
+            htmlFor="appt_notes"
+          >
             Comments:
           </label>
           <textarea
             name="notes"
+            id="appt_notes"
             value={this.state.notes}
             className="NewApptForm__text"
             onChange={(e) => this.handleNotes(e)}

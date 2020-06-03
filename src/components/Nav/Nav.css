@@ -1,6 +1,7 @@
 .Nav__section {
   color: #edf2f4;
   font-family: "Comfortaa", sans-serif;
+  font-size: 12px;
   text-decoration: none;
 }
 
@@ -32,14 +33,14 @@
 }
 
 .logo {
-  height: 40px;
+  height: 20px;
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (min-width: 350px) {
   .Nav__section {
-    font-size: 12px;
+    font-size: 16px;
   }
   .logo {
-    height: 20px;
+    height: 40px;
   }
 }

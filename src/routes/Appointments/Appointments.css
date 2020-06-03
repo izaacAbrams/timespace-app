@@ -35,6 +35,7 @@
 .Appointments__main_appt {
   background-color: #23395b;
   font-family: "Roboto", sans-serif;
+  font-size: 14px;
   border-radius: 5px;
   padding: 10px;
   margin: 20px;

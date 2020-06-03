@@ -8,7 +8,7 @@
 }
 
 .date-card-date {
-  font-size: 22px;
+  font-size: 15px;
 }
 
 .date-picker-container {
@@ -60,11 +60,11 @@
 }
 
 .date-card-date {
-  font-size: 22px;
+  font-size: 12px;
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (min-width: 440px) {
   .date-card-date {
-    font-size: 12px;
+    font-size: 22px;
   }
 }
